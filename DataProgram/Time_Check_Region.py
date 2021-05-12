@@ -1,7 +1,7 @@
 import pandas as pd
 from timeit import default_timer as timer
 from datetime import timedelta
-
+#파이썬 저장된 파일에서 각 지역별 파일 있으면 실행가능
 #강원
 start0 = timer() #시작 시간 저장
 data0 = pd.read_csv('강원.csv' , engine='python', encoding='cp949') #파일 읽기, csv 파일명 변경 필요 ^^ *중요*

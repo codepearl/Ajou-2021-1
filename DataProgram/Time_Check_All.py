@@ -4,7 +4,8 @@ from datetime import timedelta
 
 start = timer() #시작 시간 저장
 
-data = pd.read_csv('경기.csv' , engine='python', encoding='cp949') #파일 읽기, csv 파일명 변경 필요 ^^ *중요*
+#파이썬 저장된 폴더내 사용가능, 파일변경 시 파일명 변경
+data = pd.read_csv('Merge_File_All.csv' , engine='python', encoding='cp949') #파일 읽기, csv 파일명 변경 필요 ^^ *중요*
 
 
 print( 'Data 수:',len(data))
