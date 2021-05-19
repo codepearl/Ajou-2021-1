@@ -9,11 +9,12 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 
 manager_name = "scenemanager"
+
 main_ui = uic.loadUiType("ui\mainscene.ui")[0]
 searchtable_ui = uic.loadUiType("ui\searchscene_table.ui")[0]
 
 class MainScene(QMainWindow, main_ui):
-    def __init__(self, parent=None):
+    def __init__(self, parent = None):
         super(MainScene,self).__init__(parent)
         self.setupUi(self)
 
@@ -34,18 +35,18 @@ screen = QStackedWidget()
 #return_map #format undecided
 
 
-def SetMainScreen():
+def SetScreen():
     screen.addWidget(mainScene)
     screen.addWidget(searchScene)
     screen.resize(900,600)
     screen.setWindowTitle("Pear129")
 
-def ShowMainScreen():
+def ShowScreen():
     screen.show()
     app.exec_()
     #nonValue-Returning
 
-def SetButtonEvent():
+def SetButton():
     mainScene.tableButton.clicked.connect(lambda: screen.setCurrentIndex(1))
     mainScene.exitButton.clicked.connect(lambda: sys.exit()) #End Process
     searchScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
@@ -75,9 +76,9 @@ if __name__ == '__main__':
     #iteration for program
 
     #Test()
-    SetMainScreen()
-    SetButtonEvent()
-    ShowMainScreen()
+    SetScreen()
+    SetButton()
+    ShowScreen()
     
     #Process by case depending on the input
     #if(input == )

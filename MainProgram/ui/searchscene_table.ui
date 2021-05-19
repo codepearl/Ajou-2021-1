@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>912</width>
-    <height>595</height>
+    <height>594</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -242,7 +242,7 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
 background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(170, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
      </property>
      <property name="text">
-      <string>뒤로가기</string>
+      <string>뒤로가기(Back)</string>
      </property>
     </widget>
     <widget class="QTableView" name="tableView">
