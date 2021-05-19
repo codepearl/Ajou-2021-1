@@ -1,7 +1,7 @@
 import pandas as pd
 import datamanager as dm
 
-manager_name="test"
+manager_name="analysismanager"
 
 def Recommend(isArea, li):
     testData = dm.DataSearch(isArea, li, manager_name)
