@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Pear129</class>
+ <widget class="QMainWindow" name="Pear129">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>820</width>
+    <height>652</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="layout" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>891</width>
+      <height>594</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(255, 255, 255)</string>
+    </property>
+    <widget class="QLabel" name="mainLabel">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>70</y>
+       <width>311</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 20pt &quot;맑은 고딕&quot;;</string>
+     </property>
+     <property name="text">
+      <string>메뉴를 선택하세요</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tableButton">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>380</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+     </property>
+     <property name="text">
+      <string>조회하기(Table)</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="graphButton">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>380</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+     </property>
+     <property name="text">
+      <string>조회하기(Graph)</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="recommendButton">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>380</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+     </property>
+     <property name="text">
+      <string>창업 추천받기</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="mapButton">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>380</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+     </property>
+     <property name="text">
+      <string>지도에서 보기</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exitButton">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>460</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(255, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+     </property>
+     <property name="text">
+      <string>종료하기</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>820</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
