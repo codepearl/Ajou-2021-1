@@ -10,4 +10,5 @@ def DataSearch(isArea, li, manager_name):
     return data
 
 
-# DataSearch(1, 2, 3)
+# data = DataSearch(1, 2, 3)
+# print(data)
