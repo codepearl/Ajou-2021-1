@@ -7,8 +7,9 @@ manager_name="analysismanager"
 def Recommend(isArea, li):
     dmdata = dm.DataSearch(isArea, li, manager_name)
     #Freqdata = FreqTop(dmdata)
-    Freqdata = FreqBottom(dmdata)
+    #Freqdata = FreqBottom(dmdata)
     #Freqdata=FreqTop(dmdata)#pd.concat([FreqTop(dmdata),FreqBottom(dmdata)])
+    Freqdata = pd.concat([FreqTop(dmdata),FreqBottom(dmdata)], ignore_index=True)
     return Freqdata
     
 def FreqTop(dmdata): #Freq=빈도, Top=빈도수 상위
@@ -32,4 +33,3 @@ def FreqBottom(dmdata): #Freq=빈도, Bottom=빈도수 하위
 #    data=dmdata.describe()
 #    statsdata=pd.DataFrame(data.iloc[:2,-1])
 #    return statsdata
-

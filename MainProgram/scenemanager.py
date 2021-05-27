@@ -109,7 +109,6 @@ class AnalysisScene(QMainWindow, searchtable_ui):
 
     def ShowData(self):
         df = am.Recommend(True, "Test")
-        print(df)
         model = DataFrameModel(df)
         self.tableView.setModel(model)
 
