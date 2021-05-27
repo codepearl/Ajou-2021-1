@@ -35,7 +35,7 @@ manager_name = "mapmanager"
 # 위에 0,1,2,3,4,5는 request_type
 
 def Map(request_type, li): #call from scenemanager
-    mapdata = ShowLoc(request_type, li)
+    mapData = ShowLoc()
     return mapData
     
     
@@ -51,16 +51,17 @@ def ShowLoc (): #(request_type, li): # 위도,경도, 상호명, etc..(지도에
     list2=[]
     map = folium.Map(tiles='Stamen Terrain', location = [lat,lng], zoom_start=11)
     marker_cluster = MarkerCluster().add_to(map)
-    for a in range(1,2800): #data.index: // 현재 데이터 3000개가 넘어가면 지도가 안열려서 우선 range 넣음
+    for a in range(1,1000): #data.index: // 현재 데이터 3000개가 넘어가면 지도가 안열려서 우선 range 넣음 / 진주컴 1000개 기준
         folium.Marker(location = [data.loc[a,"위도"],data.loc[a,"경도"]],zoom_start=11,
                       popup=data.loc[a,"상호명"]).add_to(marker_cluster)
         list1.append(data.loc[a,"위도"])
         list2.append(data.loc[a,"경도"])
     
-    map.save('map_test.html')
+    #map.save('map_test.html')
+    
     return map
 
-print (ShowLoc())
+#print (ShowLoc())
 
 '''
 
