@@ -5,7 +5,7 @@ manager_name="analysismanager"
 
 def Recommend(isArea, li):
     dmdata = dm.DataSearch(isArea, li, manager_name)
-    Freqdata=pd.concat([FreqTop(dmdata),FreqBottom(dmdata)])
+    Freqdata=pd.concat([FreqTop(dmdata),FreqBottom(dmdata)])  
     return Freqdata
     
 def FreqTop(dmdata): #Freq=빈도, Top=빈도수 상위
@@ -22,6 +22,7 @@ def FreqBottom(dmdata): #Freq=빈도, Bottom=빈도수 하위
     freqtotal=pd.concat([freqbottom3,freqper],axis=1)
     return freqtotal
 
+print (Recommend(1,1))
 #새로 추가된 기능 : 백분율 (top, bottom 데이터 개수만으론 부족한 정보, 해당 개수가 어느정도 비율인지가 더 좋은 정보 제공)
 #추가 예정인 기능 : 1. 고유한 데이터의 개수, 2. 전체 데이터의 개수 (코드 이미 작성하였으나, 데이터프레임에 추가하는 도중 사소한 문제 발생)
 
