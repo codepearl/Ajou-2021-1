@@ -40,7 +40,7 @@ def Map(request_type, li): #call from scenemanager
     
     
 def GetLoc (): #(request_type, li): #Datamanager return
-    return dm.DataSearch(True, "Test", 'MapManager') #(request_type, li, manager_name) # 해당 조건에 부합하는 Data Frame return 받음 ex) 위도,경도, 상호명, etc..(지도에 표시할 내용)
+    return dm.DataSearch(True, "Test", 'mapmanager') #(request_type, li, manager_name) # 해당 조건에 부합하는 Data Frame return 받음 ex) 위도,경도, 상호명, etc..(지도에 표시할 내용)
 
 
 def ShowLoc (): #(request_type, li): # 위도,경도, 상호명, etc..(지도에 표시할 내용) 받아서 맵에서 표시
