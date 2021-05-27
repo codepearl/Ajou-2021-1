@@ -4,16 +4,25 @@ import pandas as pd
 def DataSearch(isArea, li, manager_name):
     pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
 
-    if manager_name == 'MapManager':
+    if manager_name == 'mapmanager':
         handled_data = MMSearch(pure_data)
+        return handled_data
 
-    if manager_name == 'GraphManager':
+    elif manager_name == 'graphmanager':
         handled_data = GMSearch(pure_data)
+        return handled_data
 
-    if manager_name == 'AnalysisManager':
+    elif manager_name == 'analysismanager':
         handled_data = AMSearch(pure_data)
+        return handled_data
 
-    return handled_data
+    elif manager_name == 'scenemanager':
+        handled_data = SMSearch(pure_data)
+        return handled_data
+
+    else:
+        handled_data = SMSearch(pure_data)
+        return handled_data
 
 
 def MMSearch(pure_data):
@@ -29,8 +38,13 @@ def AMSearch(pure_data):
     am_data = pd.DataFrame(pure_data, columns=['상권업종대분류명','상권업종중분류명','상권업종소분류명','시군구명','법정동명'])
     return am_data
 
+def SMSearch(pure_data):
+    sm_data = pd.DataFrame(pure_data)
+    return sm_data
+
+
 if __name__ == '__main__':
-    data = DataSearch(1, 2, 'MapManager')
+    data = DataSearch(1, 2,'mapmanager')
     print(data)
 
 '''
