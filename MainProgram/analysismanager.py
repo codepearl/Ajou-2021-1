@@ -1,25 +1,33 @@
 import pandas as pd
 import datamanager as dm
+import numpy as np
 
 manager_name="analysismanager"
 
 def Recommend(isArea, li):
     dmdata = dm.DataSearch(isArea, li, manager_name)
+<<<<<<< HEAD
     Freqdata=pd.concat([FreqTop(dmdata),FreqBottom(dmdata)])  
+=======
+    #Freqdata = FreqTop(dmdata)
+    #Freqdata = FreqBottom(dmdata)
+    #Freqdata=FreqTop(dmdata)#pd.concat([FreqTop(dmdata),FreqBottom(dmdata)])
+    Freqdata = pd.concat([FreqTop(dmdata),FreqBottom(dmdata)], ignore_index=True)
+>>>>>>> 8f664e988165fd721e643893e72562a79a17a505
     return Freqdata
     
 def FreqTop(dmdata): #Freq=빈도, Top=빈도수 상위
-    data=dmdata.value_counts()
+    data=dmdata.value_counts().rename_axis('법정동명').reset_index(name='counts')
     freqtop3=data.head(3)
-    freqper=(freqtop3/len(dmdata))*100
-    freqtotal=pd.concat([freqtop3,freqper],axis=1)
+    #freqper=(freqtop3/len(dmdata))*100
+    freqtotal=freqtop3
     return freqtotal
 
 def FreqBottom(dmdata): #Freq=빈도, Bottom=빈도수 하위
-    data=dmdata.value_counts()
-    freqbottom3=data.tail(3)
-    freqper=(freqbottom3/len(dmdata))*100
-    freqtotal=pd.concat([freqbottom3,freqper],axis=1)
+    data=dmdata.value_counts(ascending=True).rename_axis('법정동명').reset_index(name='counts')
+    freqbottom3=data.head(3)
+    #freqper=(freqbottom3/len(dmdata))*100
+    freqtotal=freqbottom3
     return freqtotal
 
 print (Recommend(1,1))

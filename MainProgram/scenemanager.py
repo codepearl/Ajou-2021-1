@@ -108,8 +108,7 @@ class AnalysisScene(QMainWindow, searchtable_ui):
         self.searchButton.clicked.connect(self.ShowData)
 
     def ShowData(self):
-        df = dm.DataSearch(True, "Test", manager_name)#am.Recommend(True, "Test")
-        #print(df)
+        df = am.Recommend(True, "Test")
         model = DataFrameModel(df)
         self.tableView.setModel(model)
 
@@ -177,15 +176,6 @@ def SetButton():
     analysisScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     mapScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     
-
-    
-
-#def OrSelectCategory():
-    #return something
-
-#def AndSelectCategory():
-    #return something
-
 def Test():
     testData = TestGetDummy()
     TestPrintDummy(testData)
