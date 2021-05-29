@@ -2,32 +2,36 @@ import pandas as pd
 
 
 def DataSearch(isArea, li, manager_name):
-    
+    pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
+
+    if isArea:
+        # 입력으로 지역이 될 경우, 현재 2개 모두 입력되어야 함
+        m_district = pure_data['시군구명'] == li[0]
+        s_district = pure_data['법정동명'] == li[1]
+        input_based_data = pure_data[m_district & s_district]
+    else:
+        # 입력으로 업종이 입력될 경우, 현재 3개 모두 입력되어야 함
+        l_class = pure_data['상권업종대분류명'] == li[0]
+        m_class = pure_data['상권업종중분류명'] == li[1]
+        s_class = pure_data['상권업종소분류명'] == li[2]
+        input_based_data = pure_data[l_class & m_class & s_class]
 
     if manager_name == 'mapmanager':
-        pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
-        handled_data = MMSearch(pure_data)
-        return handled_data
+        handled_data = MMSearch(input_based_data)
 
     elif manager_name == 'graphmanager':
-        pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
-        handled_data = GMSearch(pure_data)
-        return handled_data
+        handled_data = GMSearch(input_based_data)
 
     elif manager_name == 'analysismanager':
-        pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
-        handled_data = AMSearch(pure_data)
-        return handled_data
+        handled_data = AMSearch(input_based_data)
 
     elif manager_name == 'scenemanager':
-        pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
-        handled_data = SMSearch(pure_data)
-        return handled_data
+        handled_data = SMSearch(input_based_data)
 
     else:
-        pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
-        handled_data = SMSearch(pure_data)
-        return handled_data
+        handled_data = SMSearch(input_based_data)
+
+    return handled_data
 
 
 def MMSearch(pure_data):
@@ -49,15 +53,11 @@ def SMSearch(pure_data):
 
 
 if __name__ == '__main__':
-    data = DataSearch(1, 2,'mapmanager')
+    temp_list = ['세종특별자치시', '부강면']
+    data = DataSearch(True, temp_list,'datamanager')
     print(data)
 
 '''
 CODE REIVEW by pearl
-
 2. csv에서 Load한 data를 담을 변수 선언 필요(전역 변수)
-
-4. 특정 열만 load하거나, 특정 열만 return 하는 열 처리 과정 필요
-
-5. isArea, li에 따른 data 추리는 과정 필요
 '''
