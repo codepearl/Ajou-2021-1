@@ -23,7 +23,7 @@ def DataSearch(isArea, li, manager_name):
         handled_data = GMSearch(input_based_data)
 
     elif manager_name == 'analysismanager':
-        handled_data = AMSearch(input_based_data)
+        handled_data = AMSearch(input_based_data, isArea)
 
     elif manager_name == 'scenemanager':
         handled_data = SMSearch(input_based_data)
@@ -34,26 +34,31 @@ def DataSearch(isArea, li, manager_name):
     return handled_data
 
 
-def MMSearch(pure_data):
-    mm_data = pd.DataFrame(pure_data, columns=['상호명','경도','위도'])
+def MMSearch(input_based_data):
+    mm_data = pd.DataFrame(input_based_data, columns=['상호명','경도','위도'])
     return mm_data
 
 
-def GMSearch(pure_data):
-    gm_data = pd.DataFrame(pure_data, columns=['상호명','지점명','상권업종대분류명','상권업종중분류명','상권업종소분류명','시군구명','법정동명'])
+def GMSearch(input_based_data):
+    gm_data = pd.DataFrame(input_based_data, columns=['상호명','지점명','상권업종대분류명','상권업종중분류명','상권업종소분류명','시군구명','법정동명'])
     return gm_data
 
-def AMSearch(pure_data):
-    am_data = pd.DataFrame(pure_data["법정동명"])
+
+def AMSearch(input_based_data, isArea):
+    if isArea:
+        am_data = pd.DataFrame(input_based_data, columns=['상권업종대분류명','상권업종중분류명','상권업종소분류명'])
+    else:
+        am_data = pd.DataFrame(input_based_data, columns=['시군구명','법정동명'])
     return am_data
 
-def SMSearch(pure_data):
-    sm_data = pd.DataFrame(pure_data)
+
+def SMSearch(input_based_data):
+    sm_data = pd.DataFrame(input_based_data)
     return sm_data
 
 
 if __name__ == '__main__':
-    temp_list = ['세종특별자치시', '부강면']
+    temp_list = ['세종특별자치시', '조치원읍']
     data = DataSearch(True, temp_list,'datamanager')
     print(data)
 
