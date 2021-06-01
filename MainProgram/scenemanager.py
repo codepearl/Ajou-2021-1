@@ -16,6 +16,22 @@ manager_name = "scenemanager"
 main_ui = uic.loadUiType("ui\mainscene.ui")[0]
 searchtable_ui = uic.loadUiType("ui\searchscene_table.ui")[0]
 map_ui = uic.loadUiType("ui\searchscene_map.ui")[0]
+analysis_ui = uic.loadUiType("ui\searchscene_analysis.ui")[0]
+
+
+def ResetInput():
+    global byArea
+    byArea = True
+
+def SetByArea():
+    global byArea
+    byArea = True
+    print(byArea)
+
+def SetByCategory():
+    global byArea
+    byArea = False
+    print(byArea)
 
 class DataFrameModel(QtCore.QAbstractTableModel):
     DtypeRole = QtCore.Qt.UserRole + 1000
@@ -56,6 +72,8 @@ class DataFrameModel(QtCore.QAbstractTableModel):
         return self._dataframe.columns.size
 
     def data(self, index, role=QtCore.Qt.DisplayRole):
+        #if not index.isValid() or not (0 <= index.row() < self.rowCount() \
+        #    and 0 <= index.column() < self.columnCount()):
         if not index.isValid() or not (0 <= index.row() < self.rowCount() \
             and 0 <= index.column() < self.columnCount()):
             return QtCore.QVariant()
@@ -84,45 +102,190 @@ class MainScene(QMainWindow, main_ui):
     def __init__(self, parent = None):
         super(MainScene,self).__init__(parent)
         self.setupUi(self)
+        ResetInput()
 
 class SearchScene(QMainWindow, searchtable_ui):
     def __init__(self, parent = None):
         super(SearchScene,self).__init__(parent)
         self.setupUi(self)
         self.searchButton.clicked.connect(self.ShowData)
+        
+        for i in dm.ListMDistrict():
+            self.cityBox.addItem(i)
+        for i in dm.ListLCategory():
+            self.LCategoryBox.addItem(i)
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
 
+        if byArea:
+            self.byArea.setChecked(True)
+            self.byCategory.setChecked(False)
+        else:
+            self.byArea.setChecked(False)
+            self.byCategory.setChecked(True)
+
+        self.cityBox.currentIndexChanged.connect(self.SetDistrict)
+        self.LCategoryBox.currentIndexChanged.connect(self.SetMCategory)
+        self.MCategoryBox.currentIndexChanged.connect(self.SetSCategory)
+
+        self.byArea.clicked.connect(SetByArea)
+        self.byCategory.clicked.connect(SetByCategory)
+
+
+        
     def ShowData(self):
-        df = dm.DataSearch(True, "Test", manager_name)
+        print(byArea)
+        if byArea:
+            li = []
+            li.append(self.cityBox.currentText())
+            li.append(self.dongBox.currentText())
+            df = dm.DataSearch(byArea, li, manager_name)
+            
+        else:
+            li = []
+            li.append(self.LCategoryBox.currentText())
+            li.append(self.MCategoryBox.currentText())
+            li.append(self.SCategoryBox.currentText())
+            df = dm.DataSearch(byArea, li, manager_name)
+
+
+        df = df.reset_index()
         model = DataFrameModel(df)
         self.tableView.setModel(model)
+
+    def SetDistrict(self):
+        self.dongBox.clear()
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+
+    def SetMCategory(self):
+        self.MCategoryBox.clear()
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+
+    def SetSCategory(self):
+        self.SCategoryBox.clear()
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
 
 class GraphScene(QMainWindow, searchtable_ui):
     def __init__(self, parent = None):
         super(GraphScene,self).__init__(parent)
         self.setupUi(self)
 
-class AnalysisScene(QMainWindow, searchtable_ui):
+class AnalysisScene(QMainWindow, analysis_ui):
     def __init__(self, parent = None):
         super(AnalysisScene,self).__init__(parent)
         self.setupUi(self)
-        self.searchButton.clicked.connect(self.ShowData)
+        self.bestButton.clicked.connect(self.ShowBestData)
+        self.worstButton.clicked.connect(self.ShowWorstData)
 
-    def ShowData(self):
-        df = am.Recommend(True, "Test")
+        for i in dm.ListMDistrict():
+            self.cityBox.addItem(i)
+        for i in dm.ListLCategory():
+            self.LCategoryBox.addItem(i)
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
+
+        if byArea:
+            self.byArea.setChecked(True)
+            self.byCategory.setChecked(False)
+        else:
+            self.byArea.setChecked(False)
+            self.byCategory.setChecked(True)
+
+        self.cityBox.currentIndexChanged.connect(self.SetDistrict)
+        self.LCategoryBox.currentIndexChanged.connect(self.SetMCategory)
+        self.MCategoryBox.currentIndexChanged.connect(self.SetSCategory)
+
+        self.byArea.clicked.connect(SetByArea)
+        self.byCategory.clicked.connect(SetByCategory)
+            
+    def ShowBestData(self):
+        if byArea:
+            li = []
+            li.append(self.cityBox.currentText())
+            li.append(self.dongBox.currentText())
+            print(li)
+            df = am.FreqBottom(True, li)
+            
+        else:
+            li = []
+            li.append(self.LCategoryBox.currentText())
+            li.append(self.MCategoryBox.currentText())
+            li.append(self.SCategoryBox.currentText())
+            print(li)
+            df = am.FreqBottom(False, li)
+
+        df = df.reset_index()
+        print(df)
         model = DataFrameModel(df)
         self.tableView.setModel(model)
+    def ShowWorstData(self):
+        if byArea:
+            li = []
+            li.append(self.cityBox.currentText())
+            li.append(self.dongBox.currentText())
+            print(li)
+            df = am.FreqTop(True, li)
+            
+        else:
+            li = []
+            li.append(self.LCategoryBox.currentText())
+            li.append(self.MCategoryBox.currentText())
+            li.append(self.SCategoryBox.currentText())
+            print(li)
+            df = am.FreqTop(False, li)
+
+        df = df.reset_index()
+        
+        model = DataFrameModel(df)
+        self.tableView.setModel(model)
+    def SetDistrict(self):
+        self.dongBox.clear()
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+
+    def SetMCategory(self):
+        self.MCategoryBox.clear()
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+
+    def SetSCategory(self):
+        self.SCategoryBox.clear()
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
 
 class MapScene(QMainWindow, map_ui):
     def __init__(self, parent = None):
         super(MapScene,self).__init__(parent)
         self.setupUi(self)
         self.searchButton.clicked.connect(self.ShowMap)
+
+        for i in dm.ListMDistrict():
+            self.cityBox.addItem(i)
+        for i in dm.ListLCategory():
+            self.LCategoryBox.addItem(i)
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
+
+        self.cityBox.currentIndexChanged.connect(self.SetDistrict)
+        self.LCategoryBox.currentIndexChanged.connect(self.SetMCategory)
+        self.MCategoryBox.currentIndexChanged.connect(self.SetSCategory)
         
         data = io.BytesIO()
-        m = mm.Map(5,"Test") #Test
-        m.save(data, close_file=False)
-        self.webView.setHtml(data.getvalue().decode())
-    def ShowMap(self):
         #Test Code
         coordinate = (37.8199286, -122.4782551)
         m = folium.Map(
@@ -130,9 +293,36 @@ class MapScene(QMainWindow, map_ui):
         	zoom_start=13,
         	location=coordinate
         )
+
+        m.save(data, close_file=False)
+        self.webView.setHtml(data.getvalue().decode())
+    def ShowMap(self):
+        li = []
+        li.append(self.cityBox.currentText())
+        li.append(self.dongBox.currentText())
+        li.append(self.LCategoryBox.currentText())
+        li.append(self.MCategoryBox.currentText())
+        li.append(self.SCategoryBox.currentText())
+        print(li)
+        m = mm.Map(len(li),li)
         data = io.BytesIO()
         m.save(data, close_file=False)
         self.webView.setHtml(data.getvalue().decode())
+
+    def SetDistrict(self):
+        self.dongBox.clear()
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+
+    def SetMCategory(self):
+        self.MCategoryBox.clear()
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+
+    def SetSCategory(self):
+        self.SCategoryBox.clear()
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
 
 
 app = QApplication(sys.argv)
@@ -176,16 +366,6 @@ def SetButton():
     analysisScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     mapScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     
-def Test():
-    testData = TestGetDummy()
-    TestPrintDummy(testData)
-    
-def TestGetDummy():
-    return dm.DataSearch(True, "Test", manager_name)
-
-def TestPrintDummy(data):
-    print(data)
-
 #if __name__ == '__init__':
 
 
