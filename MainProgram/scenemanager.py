@@ -136,7 +136,7 @@ class SearchScene(QMainWindow, searchtable_ui):
 
         
     def ShowData(self):
-        print(byArea)
+        #print(byArea)
         if byArea:
             li = []
             li.append(self.cityBox.currentText())
@@ -224,7 +224,7 @@ class AnalysisScene(QMainWindow, analysis_ui):
             df = am.FreqBottom(byArea, li)
 
         df = df.reset_index()
-        print(df)
+        #print(df)
         model = DataFrameModel(df)
         self.tableView.setModel(model)
     def ShowWorstData(self):
