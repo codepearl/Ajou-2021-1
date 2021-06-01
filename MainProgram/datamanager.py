@@ -1,8 +1,9 @@
 import pandas as pd
 
+pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
+
 
 def DataSearch(isArea, li, manager_name):
-    pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
 
     if isArea:
         # 입력으로 지역이 될 경우, 현재 2개 모두 입력되어야 함
@@ -57,9 +58,40 @@ def SMSearch(input_based_data):
     return sm_data
 
 
+# SM에 입력 list data 제공
+    # 지역
+
+def ListMDistrict():
+    return pure_data['시군구명'].unique()
+
+
+def ListSDistrict(m_district):
+    filtered_data = pure_data[pure_data['시군구명'] == m_district]
+    return filtered_data['법정동명'].unique()
+
+    # 업종분류
+
+
+def ListLCategory():
+    return pure_data['상권업종대분류명'].unique()
+
+
+def ListMCategory(l_district):
+    filtered_data = pure_data[pure_data['상권업종대분류명'] == l_district]
+    return filtered_data['상권업종중분류명'].unique()
+
+
+def ListSCategory(m_district):
+    filtered_data = pure_data[pure_data['상권업종중분류명'] == m_district]
+    return filtered_data['상권업종소분류명'].unique()
+
+
 if __name__ == '__main__':
-    temp_list = ['세종특별자치시', '조치원읍']
-    data = DataSearch(True, temp_list,'datamanager')
+    # temp_list = ['세종특별자치시', '조치원읍']
+    # data = DataSearch(True, temp_list,'datamanager')
+    # data = ListSDistrict('세종특별자치시')
+    # data = ListMDistrict()
+    data = ListSCategory('개인서비스')
     print(data)
 
 '''
