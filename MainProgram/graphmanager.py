@@ -6,34 +6,55 @@ manager_name = "graphmanager"
 
 
 def GetGraph(isArea, li, manager_name):
-    df = dm.DataSearch(isArea, li, manager_name)
+    pure_data = dm.DataSearch(isArea, li, manager_name)
     plt.rc('font', family='NanumGothic')
-    return_countplot_graph = MakecountplotGraph(df, isArea)
-    # return_pie_graph = MakePieGraph(df, isArea)
-    # return return_countplot_graph, return_pie_graph
-    return return_countplot_graph
+    return_countplot = MakecountplotGraph(pure_data, isArea)
+    return_pie = MakePieGraph(pure_data, isArea)
+    return return_countplot, return_pie
+    # return return_countplot_graph
 
 
-def MakecountplotGraph(df, isArea):
-    # xLcategory = df['업종대분류명']
-    # return_graph = plt.hist(xLcategory)
+def MakecountplotGraph(pure_data, isArea):
     if isArea:
-        made_countplot_graph = sns.countplot(x='상권업종대분류명', data=df)
+        made_countplot = sns.countplot(x='상권업종대분류명', data=pure_data)
     else:
-        made_countplot_graph = sns.countplot(x='법정동명', data=df)
+        made_countplot = sns.countplot(x='법정동명', data=pure_data)
 
-    return made_countplot_graph
+    return made_countplot
 
-#
-# def MakePieGraph(df, isArea):
-#     if isArea:
-#         for_pie_df = df['상권업종대분류명']
-#         made_pie_graph = for_pie_df.plot.pie(autopct='%.2f%%')
-#     else:
-#         for_pie_df = df['법정동명']
-#         temp = for_pie_df['법정동명'].value_counts()
-#         # made_pie_graph = plt.pie(temp, for_pie_df, shadow=True, startangle=90 ) 여기 문제
-#     return made_pie_graph
+
+def MakePieGraph(pure_data, isArea):
+    # if isArea:
+    ratio_list, labels_list = MakePieData(pure_data, isArea)
+    made_pie = plt.pie(ratio_list, labels=labels_list, autopct='%.1f%%')
+    # else:
+    #     ratio_list, labels_list = MakePieData(pure_data, isArea)
+    #     made_pie = plt.pie(ratio_list, labels=labels_list, autopct='%.1f%%')
+    return made_pie
+
+
+def MakePieData(pure_data, isArea):
+    if isArea:
+        list_filtered_data = pure_data['상권업종소분류명'].tolist()
+        set_filtered_data = set(list_filtered_data)
+        list_filtered_data2 = list(set_filtered_data)
+        count_list = []
+        ratio_list = []
+        for i in list_filtered_data2:
+            count_list.append((list_filtered_data.count(i)))
+        for j in count_list:
+            ratio_list.append(j / len(list_filtered_data) * 100)
+    else:
+        list_filtered_data = pure_data['법정동명'].tolist()
+        set_filtered_data = set(list_filtered_data)
+        list_filtered_data2 = list(set_filtered_data)
+        count_list = []
+        ratio_list = []
+        for i in list_filtered_data2:
+            count_list.append((list_filtered_data.count(i)))
+        for j in count_list:
+            ratio_list.append(j / len(list_filtered_data) * 100)
+    return ratio_list, list_filtered_data2
 
 
 if __name__ == '__main__':
