@@ -26,12 +26,10 @@ def ResetInput():
 def SetByArea():
     global byArea
     byArea = True
-    print(byArea)
 
 def SetByCategory():
     global byArea
     byArea = False
-    print(byArea)
 
 class DataFrameModel(QtCore.QAbstractTableModel):
     DtypeRole = QtCore.Qt.UserRole + 1000
@@ -214,16 +212,16 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
-            print(li)
-            df = am.FreqBottom(True, li)
+            #print(li)
+            df = am.FreqBottom(byArea, li)
             
         else:
             li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            print(li)
-            df = am.FreqBottom(False, li)
+            #print(li)
+            df = am.FreqBottom(byArea, li)
 
         df = df.reset_index()
         print(df)
@@ -234,16 +232,16 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
-            print(li)
-            df = am.FreqTop(True, li)
+            #print(li)
+            df = am.FreqTop(byArea, li)
             
         else:
             li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            print(li)
-            df = am.FreqTop(False, li)
+            #print(li)
+            df = am.FreqTop(byArea, li)
 
         df = df.reset_index()
         
@@ -303,7 +301,7 @@ class MapScene(QMainWindow, map_ui):
         li.append(self.LCategoryBox.currentText())
         li.append(self.MCategoryBox.currentText())
         li.append(self.SCategoryBox.currentText())
-        print(li)
+        #print(li)
         m = mm.Map(len(li),li)
         data = io.BytesIO()
         m.save(data, close_file=False)
