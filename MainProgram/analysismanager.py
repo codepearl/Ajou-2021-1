@@ -1,7 +1,7 @@
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import pandas as pd
-import datamanager3 as dm
+import datamanager as dm
 
 manager_name="analysismanager"
 
