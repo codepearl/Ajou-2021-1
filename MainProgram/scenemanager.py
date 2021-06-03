@@ -1,15 +1,19 @@
 import datamanager as dm
-#import graphmanager as gm
+import graphmanager as gm
 import analysismanager as am
 import mapmanager as mm
 import pandas as pd
 import sys
 import os, io
 import folium
+import matplotlib.pyplot as plt
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5 import uic, QtCore
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 manager_name = "scenemanager"
 
@@ -17,6 +21,7 @@ main_ui = uic.loadUiType("ui\mainscene.ui")[0]
 searchtable_ui = uic.loadUiType("ui\searchscene_table.ui")[0]
 map_ui = uic.loadUiType("ui\searchscene_map.ui")[0]
 analysis_ui = uic.loadUiType("ui\searchscene_analysis.ui")[0]
+graph_ui = uic.loadUiType("ui\searchscene_graph.ui")[0]
 
 
 def ResetInput():
@@ -70,8 +75,6 @@ class DataFrameModel(QtCore.QAbstractTableModel):
         return self._dataframe.columns.size
 
     def data(self, index, role=QtCore.Qt.DisplayRole):
-        #if not index.isValid() or not (0 <= index.row() < self.rowCount() \
-        #    and 0 <= index.column() < self.columnCount()):
         if not index.isValid() or not (0 <= index.row() < self.rowCount() \
             and 0 <= index.column() < self.columnCount()):
             return QtCore.QVariant()
@@ -136,7 +139,6 @@ class SearchScene(QMainWindow, searchtable_ui):
 
         
     def ShowData(self):
-        #print(byArea)
         if byArea:
             li = []
             li.append(self.cityBox.currentText())
@@ -170,10 +172,92 @@ class SearchScene(QMainWindow, searchtable_ui):
         for i in dm.ListSCategory(self.MCategoryBox.currentText()):
             self.SCategoryBox.addItem(i)
 
-class GraphScene(QMainWindow, searchtable_ui):
+class GraphScene(QMainWindow, graph_ui):
     def __init__(self, parent = None):
         super(GraphScene,self).__init__(parent)
         self.setupUi(self)
+        self.countButton.clicked.connect(self.ShowCountData)
+        self.pieButton.clicked.connect(self.ShowPieData)
+
+        for i in dm.ListMDistrict():
+            self.cityBox.addItem(i)
+        for i in dm.ListLCategory():
+            self.LCategoryBox.addItem(i)
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
+
+        if byArea:
+            self.byArea.setChecked(True)
+            self.byCategory.setChecked(False)
+        else:
+            self.byArea.setChecked(False)
+            self.byCategory.setChecked(True)
+
+        self.cityBox.currentIndexChanged.connect(self.SetDistrict)
+        self.LCategoryBox.currentIndexChanged.connect(self.SetMCategory)
+        self.MCategoryBox.currentIndexChanged.connect(self.SetSCategory)
+
+        self.byArea.clicked.connect(SetByArea)
+        self.byCategory.clicked.connect(SetByCategory)
+
+        self.fig = plt.figure(figsize=[10,4]) #plt.Figure()
+        self.canvas = FigureCanvas(self.fig)
+        self.graphLayout.addWidget(self.canvas)
+
+        self.addToolBar(NavigationToolbar(self.canvas, self))
+        self.canvas.show()
+        
+    def ShowCountData(self):
+        if byArea:
+            li = []
+            li.append(self.cityBox.currentText())
+            li.append(self.dongBox.currentText())
+        else:
+            li = []
+            li.append(self.LCategoryBox.currentText())
+            li.append(self.MCategoryBox.currentText())
+            li.append(self.SCategoryBox.currentText())
+            
+        gh = gm.GetCountplot(byArea, li, manager_name)
+        self.fig = plt.Figure()
+        self.canvas.draw()
+        
+    def ShowPieData(self):
+        if byArea:
+            li = []
+            li.append(self.cityBox.currentText())
+            li.append(self.dongBox.currentText())
+        else:
+            li = []
+            li.append(self.LCategoryBox.currentText())
+            li.append(self.MCategoryBox.currentText())
+            li.append(self.SCategoryBox.currentText())
+        #have issue            
+
+        #gh = gm.GetPie(byArea, li, manager_name)
+        #plt.show()
+        #self.fig = plt.Figure()
+        #self.canvas.draw()
+
+    def SetDistrict(self):
+        self.dongBox.clear()
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+
+    def SetMCategory(self):
+        self.MCategoryBox.clear()
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+
+    def SetSCategory(self):
+        self.SCategoryBox.clear()
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
+        
 
 class AnalysisScene(QMainWindow, analysis_ui):
     def __init__(self, parent = None):
@@ -212,7 +296,6 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
-            #print(li)
             df = am.FreqBottom(byArea, li)
             
         else:
@@ -220,19 +303,17 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            #print(li)
             df = am.FreqBottom(byArea, li)
 
         df = df.reset_index()
-        #print(df)
         model = DataFrameModel(df)
         self.tableView.setModel(model)
+        
     def ShowWorstData(self):
         if byArea:
             li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
-            #print(li)
             df = am.FreqTop(byArea, li)
             
         else:
@@ -240,7 +321,6 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            #print(li)
             df = am.FreqTop(byArea, li)
 
         df = df.reset_index()
@@ -301,7 +381,6 @@ class MapScene(QMainWindow, map_ui):
         li.append(self.LCategoryBox.currentText())
         li.append(self.MCategoryBox.currentText())
         li.append(self.SCategoryBox.currentText())
-        #print(li)
         m = mm.Map(len(li),li)
         data = io.BytesIO()
         m.save(data, close_file=False)
@@ -330,13 +409,6 @@ graphScene = GraphScene()
 analysisScene = AnalysisScene()
 mapScene = MapScene()
 screen = QStackedWidget()
-
-#input = 0 #user input code (temp)
-#categories = []
-#return_data #pandas.DataFrame
-#return_graph #format undecided (expect plot)
-#return_map #format undecided
-
 
 def SetScreen():
     screen.addWidget(mainScene)     #mainScene index 0
@@ -368,29 +440,8 @@ def SetButton():
 
 
 if __name__ == '__main__':
-    #call function
-    #iteration for program
-
-    #Test()
+    
     SetScreen()
     SetButton()
     ShowScreen()
-    
-    #Process by case depending on the input
-    #if(input == )
-
-    #Data,Graph,Analysis
-    #categories = OrSelectCategory()
-    #return_data = dm.DataSearch(categories, manager_name)
-    #return_data = am.DataSearch(categories)
-    #return_graph = gm.GetGraph(categories)
-
-    #Map
-    #categories = AndSelectCategory()
-    #return_map = mm.GetMap(categories)
-
-    #Display returns
-
-    
-
     
