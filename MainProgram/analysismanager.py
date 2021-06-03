@@ -1,13 +1,11 @@
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 import pandas as pd
-import datamanager as dm
+import datamanager3 as dm
 
 manager_name="analysismanager"
 
-#def Recommend(isArea, li):
-#    dmdata = dm.DataSearch(isArea, li, manager_name)
-#    Freqdata = pd.concat([FreqTop(dmdata),FreqBottom(dmdata)], ignore_index=True)
-#    return Freqdata
-    
+
 def FreqTop(isArea, li): #Freq=빈도, Top=빈도수 상위
     dmdata = dm.DataSearch(isArea, li, manager_name)
     countsdata=dmdata.value_counts().rename_axis('Red Ocean').reset_index(name='Counts')
@@ -28,6 +26,28 @@ def FreqBottom(isArea, li): #Freq=빈도, Bottom=빈도수 하위
     freqtotal=totaldata.head(15)
     return freqtotal
 
-#수정내역
-#Blue Ocean, Red Ocean 각각 호출 가능하게 수정.
-#각 기능별 상위 15개의 데이터를 반환함.
+def WordCloudTop(isArea, li):
+    dmdata=FreqTop(isArea,li)
+    wcdata=dmdata['Red Ocean']
+    wc_all=''
+    for i in range(len(wcdata)):
+        wc_all=wc_all+wcdata[i]+' '
+    wc_all=str(wc_all)
+    wc_gui=WordCloud(width=1000,height=600,background_color="white",random_state=0,font_path=r'c:\windows\Fonts\malgun.ttf')
+    wc_gui_show=wc_gui.generate(wc_all)
+    plt.imshow(wc_gui_show)
+    plt.axis("off")
+    return plt.show()
+
+def WordCloudBottom(isArea, li):
+    dmdata=FreqBottom(isArea,li)
+    wcdata=dmdata['Blue Ocean']
+    wc_all=''
+    for i in range(len(wcdata)):
+        wc_all=wc_all+wcdata[i]+' '
+    wc_all=str(wc_all)
+    wc_gui=WordCloud(width=1000,height=600,background_color="white",random_state=0,font_path=r'c:\windows\Fonts\malgun.ttf')
+    wc_gui_show=wc_gui.generate(wc_all)
+    plt.imshow(wc_gui_show)
+    plt.axis("off")
+    return plt.show()
