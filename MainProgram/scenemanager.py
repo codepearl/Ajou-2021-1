@@ -178,6 +178,7 @@ class GraphScene(QMainWindow, graph_ui):
         self.setupUi(self)
         self.countButton.clicked.connect(self.ShowCountData)
         self.pieButton.clicked.connect(self.ShowPieData)
+        self.backButton.clicked.connect(self.ClearFigure)
 
         for i in dm.ListMDistrict():
             self.cityBox.addItem(i)
@@ -221,8 +222,9 @@ class GraphScene(QMainWindow, graph_ui):
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            
+
         gh = gm.GetCountplot(byArea, li, manager_name)
+
         self.fig = plt.Figure()
         self.canvas.draw()
         
@@ -242,6 +244,9 @@ class GraphScene(QMainWindow, graph_ui):
         #plt.show()
         #self.fig = plt.Figure()
         #self.canvas.draw()
+    def ClearFigure(self):
+        #plt.clf()
+        plt.cla()
 
     def SetDistrict(self):
         self.dongBox.clear()
@@ -265,6 +270,7 @@ class AnalysisScene(QMainWindow, analysis_ui):
         self.setupUi(self)
         self.bestButton.clicked.connect(self.ShowBestData)
         self.worstButton.clicked.connect(self.ShowWorstData)
+        self.backButton.clicked.connect(self.ClearFigure)
 
         for i in dm.ListMDistrict():
             self.cityBox.addItem(i)
@@ -308,6 +314,7 @@ class AnalysisScene(QMainWindow, analysis_ui):
         df = df.reset_index()
         model = DataFrameModel(df)
         self.tableView.setModel(model)
+        am.WordCloudBottom(byArea, li)
         
     def ShowWorstData(self):
         if byArea:
@@ -327,6 +334,10 @@ class AnalysisScene(QMainWindow, analysis_ui):
         
         model = DataFrameModel(df)
         self.tableView.setModel(model)
+        am.WordCloudTop(byArea, li)
+    def ClearFigure(self):
+        plt.cla()
+        
     def SetDistrict(self):
         self.dongBox.clear()
         for i in dm.ListSDistrict(self.cityBox.currentText()):
@@ -364,12 +375,12 @@ class MapScene(QMainWindow, map_ui):
         self.MCategoryBox.currentIndexChanged.connect(self.SetSCategory)
         
         data = io.BytesIO()
-        #Test Code
-        coordinate = (37.8199286, -122.4782551)
+        #Temp 
+        coordinate = (36.3, 127.8)
         m = folium.Map(
-        	tiles='Stamen Terrain',
-        	zoom_start=13,
-        	location=coordinate
+            tiles='cartodbpositron',
+            zoom_start=7,
+            location=coordinate
         )
 
         m.save(data, close_file=False)
