@@ -106,6 +106,8 @@ class MainScene(QMainWindow, main_ui):
         super(MainScene,self).__init__(parent)
         self.setupUi(self)
         ResetInput()
+        pixmap = QPixmap("img/title.png")
+        self.mainLabel.setPixmap(pixmap)
 
 class SearchScene(QMainWindow, searchtable_ui):
     def __init__(self, parent = None):
@@ -340,7 +342,7 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.SCategoryBox.currentText())
             df = am.FreqBottom(byArea, li)
 
-        df = df.reset_index()
+        #df = df.reset_index()
         model = DataFrameModel(df)
         self.tableView.setModel(model)
         
@@ -360,7 +362,7 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.SCategoryBox.currentText())
             df = am.FreqTop(byArea, li)
 
-        df = df.reset_index()
+        #df = df.reset_index()
         
         model = DataFrameModel(df)
         self.tableView.setModel(model)
@@ -567,8 +569,9 @@ def SetScreen():
     screen.addWidget(analysisScene)   #analysisScene index 3
     screen.addWidget(wordcloudScene)    #wordcloudScene index 4
     screen.addWidget(mapScene)      #mapScene index 5
-    screen.resize(900, 600)
+    screen.resize(1200, 700)
     screen.setWindowTitle("Pear129")
+    
 
 def ShowScreen():
     screen.show()

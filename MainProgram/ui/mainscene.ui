@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>820</width>
-    <height>652</height>
+    <width>1220</width>
+    <height>758</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,20 +19,22 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>891</width>
-      <height>594</height>
+      <width>1200</width>
+      <height>700</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(255, 255, 255)</string>
+     <string notr="true">
+background-color: rgb(255, 255, 255);
+</string>
     </property>
     <widget class="QLabel" name="mainLabel">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>70</y>
-       <width>311</width>
-       <height>111</height>
+       <x>240</x>
+       <y>60</y>
+       <width>821</width>
+       <height>381</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -45,15 +47,15 @@
     <widget class="QPushButton" name="tableButton">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>380</y>
+       <x>80</x>
+       <y>490</y>
        <width>131</width>
        <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
-background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+      <string notr="true">font: 75 9pt &quot;맑은 고딕&quot;;
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(255, 5, 38, 100), stop:1 rgb(255, 85, 127));</string>
      </property>
      <property name="text">
       <string>조회하기(Table)</string>
@@ -62,15 +64,15 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
     <widget class="QPushButton" name="graphButton">
      <property name="geometry">
       <rect>
-       <x>180</x>
-       <y>380</y>
+       <x>260</x>
+       <y>490</y>
        <width>131</width>
        <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
-background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(255, 164, 16, 100), stop:1 rgb(255, 153, 10));</string>
      </property>
      <property name="text">
       <string>조회하기(Graph)</string>
@@ -79,15 +81,15 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
     <widget class="QPushButton" name="recommendButton">
      <property name="geometry">
       <rect>
-       <x>330</x>
-       <y>380</y>
+       <x>440</x>
+       <y>490</y>
        <width>131</width>
        <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
-background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(120, 255, 154,100), stop:1 rgb(85, 255, 127));</string>
      </property>
      <property name="text">
       <string>창업 추천받기</string>
@@ -96,15 +98,15 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
     <widget class="QPushButton" name="mapButton">
      <property name="geometry">
       <rect>
-       <x>640</x>
-       <y>380</y>
+       <x>800</x>
+       <y>490</y>
        <width>131</width>
        <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
-background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(63, 127, 191, 100), stop:1 rgb(0, 85, 255));</string>
      </property>
      <property name="text">
       <string>지도에서 보기</string>
@@ -113,15 +115,15 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
     <widget class="QPushButton" name="exitButton">
      <property name="geometry">
       <rect>
-       <x>330</x>
-       <y>460</y>
+       <x>980</x>
+       <y>490</y>
        <width>131</width>
        <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
-background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(255, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(170, 85, 255, 100), stop:1  rgb(173, 58, 255));</string>
      </property>
      <property name="text">
       <string>종료하기</string>
@@ -130,20 +132,41 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
     <widget class="QPushButton" name="wcButton">
      <property name="geometry">
       <rect>
-       <x>480</x>
-       <y>380</y>
+       <x>620</x>
+       <y>490</y>
        <width>131</width>
        <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
-background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 100), stop:1 rgb(170, 255, 255));</string>
      </property>
      <property name="text">
-      <string>단어로 모아보기</string>
+      <string>키워드 모아보기</string>
      </property>
     </widget>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1200</width>
+       <height>700</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <zorder>widget</zorder>
+    <zorder>mainLabel</zorder>
+    <zorder>tableButton</zorder>
+    <zorder>graphButton</zorder>
+    <zorder>recommendButton</zorder>
+    <zorder>mapButton</zorder>
+    <zorder>exitButton</zorder>
+    <zorder>wcButton</zorder>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -151,7 +174,7 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>820</width>
+     <width>1220</width>
      <height>26</height>
     </rect>
    </property>

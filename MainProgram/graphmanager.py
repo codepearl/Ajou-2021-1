@@ -21,7 +21,7 @@ def GetPie(isArea, li, manager_name):
 
 
 def Makecountplot(pure_data, isArea):
-    fig = plt.figure(figsize=(5,5))
+    fig = plt.figure(figsize=(10,6))
     fig.set_facecolor('white')
     ax = fig.add_subplot()
     if isArea:
@@ -36,7 +36,7 @@ def MakePie(pure_data, isArea):
     # if isArea:
     frequency, labels, explode = MakePieData(pure_data, isArea)
 
-    fig = plt.figure(figsize=(5,5))
+    fig = plt.figure(figsize=(10,6))
     fig.set_facecolor('white')
     ax = fig.add_subplot()
 
