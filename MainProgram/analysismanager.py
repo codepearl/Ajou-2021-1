@@ -35,10 +35,8 @@ def WordCloudTop(isArea, li):
     wc_all=str(wc_all)
     wc_gui=WordCloud(width=1000,height=600,background_color="white",random_state=0,font_path=r'c:\windows\Fonts\malgun.ttf')
     wc_gui_show=wc_gui.generate(wc_all)
-    #plt.imshow(wc_gui_show)
     wc_gui_show.to_file('graph/wordcloud.png')
     plt.axis("off")
-    #return plt.show()
 
 def WordCloudBottom(isArea, li):
     dmdata=FreqBottom(isArea,li)
@@ -50,6 +48,4 @@ def WordCloudBottom(isArea, li):
     wc_gui=WordCloud(width=1000,height=600,background_color="white",random_state=0,font_path=r'c:\windows\Fonts\malgun.ttf')
     wc_gui_show=wc_gui.generate(wc_all)
     wc_gui_show.to_file('graph/wordcloud.png')
-    #plt.imshow(wc_gui_show)
     plt.axis("off")
-    #return plt.show()
