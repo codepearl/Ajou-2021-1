@@ -23,6 +23,7 @@ searchtable_ui = uic.loadUiType("ui\searchscene_table.ui")[0]
 map_ui = uic.loadUiType("ui\searchscene_map.ui")[0]
 analysis_ui = uic.loadUiType("ui\searchscene_analysis.ui")[0]
 graph_ui = uic.loadUiType("ui\searchscene_graph.ui")[0]
+wordcloud_ui = uic.loadUiType("ui\searchscene_wc.ui")[0]
 
 
 def ResetInput():
@@ -296,7 +297,6 @@ class AnalysisScene(QMainWindow, analysis_ui):
         self.setupUi(self)
         self.bestButton.clicked.connect(self.ShowBestData)
         self.worstButton.clicked.connect(self.ShowWorstData)
-        self.backButton.clicked.connect(self.ClearFigure)
         self.backButton.clicked.connect(self.ResetByArea)
 
         for i in dm.ListMDistrict():
@@ -332,7 +332,6 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
             df = am.FreqBottom(byArea, li)
-            am.WordCloudBottom(byArea, li)
             
         else:
             li = []
@@ -340,7 +339,6 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
             df = am.FreqBottom(byArea, li)
-            am.WordCloudBottom(byArea, li)
 
         df = df.reset_index()
         model = DataFrameModel(df)
@@ -354,7 +352,6 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
             df = am.FreqTop(byArea, li)
-            am.WordCloudTop(byArea, li)
             
         else:
             li = []
@@ -362,7 +359,6 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
             df = am.FreqTop(byArea, li)
-            am.WordCloudTop(byArea, li)
 
         df = df.reset_index()
         
@@ -454,13 +450,113 @@ class MapScene(QMainWindow, map_ui):
         self.SCategoryBox.clear()
         for i in dm.ListSCategory(self.MCategoryBox.currentText()):
             self.SCategoryBox.addItem(i)
+            
+class WordCloudScene(QMainWindow, wordcloud_ui):
+    def __init__(self, parent = None):
+        super(WordCloudScene,self).__init__(parent)
+        self.setupUi(self)
+        self.bestButton.clicked.connect(self.ShowBestData)
+        self.worstButton.clicked.connect(self.ShowWorstData)
+        self.backButton.clicked.connect(self.ResetByArea)
 
+        for i in dm.ListMDistrict():
+            self.cityBox.addItem(i)
+        for i in dm.ListLCategory():
+            self.LCategoryBox.addItem(i)
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
+
+        if byArea:
+            self.byArea.setChecked(True)
+            self.byCategory.setChecked(False)
+        else:
+            self.byArea.setChecked(False)
+            self.byCategory.setChecked(True)
+
+        self.cityBox.currentIndexChanged.connect(self.SetDistrict)
+        self.LCategoryBox.currentIndexChanged.connect(self.SetMCategory)
+        self.MCategoryBox.currentIndexChanged.connect(self.SetSCategory)
+
+        self.byArea.clicked.connect(SetByArea)
+        self.byCategory.clicked.connect(SetByCategory)
+
+        #self.fig = plt.figure(figsize=[10,4]) #plt.Figure()
+        #self.canvas = FigureCanvas(self.fig)
+        self.img = QLabel("이 곳에 그래프가 나타납니다. 데이터 양이 많은 경우 오래 걸릴 수 있습니다.", self)
+        #self.img.setAlignment(AlignCenter)
+        self.graphLayout.addWidget(self.img)
+        #self.graphLayout.addWidget(self.canvas)#here 
+        #self.addToolBar(NavigationToolbar(self.canvas, self))
+        #self.canvas.show()
+        
+    def ShowBestData(self):
+        if byArea:
+            li = []
+            li.append(self.cityBox.currentText())
+            li.append(self.dongBox.currentText())
+            am.WordCloudBottom(byArea, li)
+        else:
+            li = []
+            li.append(self.LCategoryBox.currentText())
+            li.append(self.MCategoryBox.currentText())
+            li.append(self.SCategoryBox.currentText())
+            am.WordCloudBottom(byArea, li)
+        pixmap = QPixmap("graph/wordcloud.png")
+        self.img.setPixmap(pixmap)
+        
+    def ShowWorstData(self):
+        if byArea:
+            li = []
+            li.append(self.cityBox.currentText())
+            li.append(self.dongBox.currentText())
+            am.WordCloudTop(byArea, li)
+        else:
+            li = []
+            li.append(self.LCategoryBox.currentText())
+            li.append(self.MCategoryBox.currentText())
+            li.append(self.SCategoryBox.currentText())
+            am.WordCloudTop(byArea, li)        
+
+        pixmap = QPixmap("graph/wordcloud.png")
+        self.img.setPixmap(pixmap)
+    def ClearFigure(self):
+        #plt.clf()
+        plt.cla()
+
+    def SetDistrict(self):
+        self.dongBox.clear()
+        for i in dm.ListSDistrict(self.cityBox.currentText()):
+            self.dongBox.addItem(i)
+
+    def SetMCategory(self):
+        self.MCategoryBox.clear()
+        for i in dm.ListMCategory(self.LCategoryBox.currentText()):
+            self.MCategoryBox.addItem(i)
+
+    def SetSCategory(self):
+        self.SCategoryBox.clear()
+        for i in dm.ListSCategory(self.MCategoryBox.currentText()):
+            self.SCategoryBox.addItem(i)
+
+    def ResetByArea(self):
+        ResetInput()
+        if byArea:
+            self.byArea.setChecked(True)
+            self.byCategory.setChecked(False)
+        else:
+            self.byArea.setChecked(False)
+            self.byCategory.setChecked(True)
 
 app = QApplication(sys.argv)
 mainScene = MainScene()
 searchScene = SearchScene()
 graphScene = GraphScene()
 analysisScene = AnalysisScene()
+wordcloudScene = WordCloudScene()
 mapScene = MapScene()
 screen = QStackedWidget()
 
@@ -469,7 +565,8 @@ def SetScreen():
     screen.addWidget(searchScene)   #searchScene index 1
     screen.addWidget(graphScene)   #graphScene index 2
     screen.addWidget(analysisScene)   #analysisScene index 3
-    screen.addWidget(mapScene)      #mapScene index 4
+    screen.addWidget(wordcloudScene)    #wordcloudScene index 4
+    screen.addWidget(mapScene)      #mapScene index 5
     screen.resize(900, 600)
     screen.setWindowTitle("Pear129")
 
@@ -482,12 +579,14 @@ def SetButton():
     mainScene.tableButton.clicked.connect(lambda: screen.setCurrentIndex(1))
     mainScene.graphButton.clicked.connect(lambda: screen.setCurrentIndex(2))
     mainScene.recommendButton.clicked.connect(lambda: screen.setCurrentIndex(3))
-    mainScene.mapButton.clicked.connect(lambda: screen.setCurrentIndex(4))
+    mainScene.wcButton.clicked.connect(lambda: screen.setCurrentIndex(4))
+    mainScene.mapButton.clicked.connect(lambda: screen.setCurrentIndex(5))
     mainScene.exitButton.clicked.connect(lambda: sys.exit()) #End Process
     
     searchScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     graphScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     analysisScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
+    wordcloudScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     mapScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     
 #if __name__ == '__init__':

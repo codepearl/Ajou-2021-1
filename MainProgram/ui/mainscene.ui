@@ -45,7 +45,7 @@
     <widget class="QPushButton" name="tableButton">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>30</x>
        <y>380</y>
        <width>131</width>
        <height>51</height>
@@ -62,7 +62,7 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
     <widget class="QPushButton" name="graphButton">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>180</x>
        <y>380</y>
        <width>131</width>
        <height>51</height>
@@ -79,7 +79,7 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
     <widget class="QPushButton" name="recommendButton">
      <property name="geometry">
       <rect>
-       <x>420</x>
+       <x>330</x>
        <y>380</y>
        <width>131</width>
        <height>51</height>
@@ -96,7 +96,7 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
     <widget class="QPushButton" name="mapButton">
      <property name="geometry">
       <rect>
-       <x>600</x>
+       <x>640</x>
        <y>380</y>
        <width>131</width>
        <height>51</height>
@@ -125,6 +125,23 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
      </property>
      <property name="text">
       <string>종료하기</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="wcButton">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>380</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
+background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(85, 170, 255, 200), stop:1 rgba(255, 255, 255, 200))</string>
+     </property>
+     <property name="text">
+      <string>단어로 모아보기</string>
      </property>
     </widget>
    </widget>
