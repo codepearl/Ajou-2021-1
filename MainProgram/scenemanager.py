@@ -222,9 +222,8 @@ class GraphScene(QMainWindow, graph_ui):
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-
+        plt.clf()
         gh = gm.GetCountplot(byArea, li, manager_name)
-
         self.fig = plt.Figure()
         self.canvas.draw()
         
@@ -296,13 +295,16 @@ class AnalysisScene(QMainWindow, analysis_ui):
 
         self.byArea.clicked.connect(SetByArea)
         self.byCategory.clicked.connect(SetByCategory)
+        
             
     def ShowBestData(self):
+        plt.cla()
         if byArea:
             li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
             df = am.FreqBottom(byArea, li)
+            am.WordCloudBottom(byArea, li)
             
         else:
             li = []
@@ -310,18 +312,21 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
             df = am.FreqBottom(byArea, li)
+            am.WordCloudBottom(byArea, li)
 
         df = df.reset_index()
         model = DataFrameModel(df)
         self.tableView.setModel(model)
-        am.WordCloudBottom(byArea, li)
+        
         
     def ShowWorstData(self):
+        plt.cla()
         if byArea:
             li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
             df = am.FreqTop(byArea, li)
+            am.WordCloudTop(byArea, li)
             
         else:
             li = []
@@ -329,12 +334,13 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
             df = am.FreqTop(byArea, li)
+            am.WordCloudTop(byArea, li)
 
         df = df.reset_index()
         
         model = DataFrameModel(df)
         self.tableView.setModel(model)
-        am.WordCloudTop(byArea, li)
+        
     def ClearFigure(self):
         plt.cla()
         
@@ -446,6 +452,11 @@ def SetButton():
     graphScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     analysisScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     mapScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
+
+    searchScene.backButton.clicked.connect(lambda: ResetInput())
+    graphScene.backButton.clicked.connect(lambda: ResetInput())
+    analysisScene.backButton.clicked.connect(lambda: ResetInput())
+    mapScene.backButton.clicked.connect(lambda: ResetInput())
     
 #if __name__ == '__init__':
 
