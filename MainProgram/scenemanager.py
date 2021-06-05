@@ -110,6 +110,7 @@ class SearchScene(QMainWindow, searchtable_ui):
         super(SearchScene,self).__init__(parent)
         self.setupUi(self)
         self.searchButton.clicked.connect(self.ShowData)
+        self.backButton.clicked.connect(self.ResetByArea)
         
         for i in dm.ListMDistrict():
             self.cityBox.addItem(i)
@@ -172,6 +173,15 @@ class SearchScene(QMainWindow, searchtable_ui):
         for i in dm.ListSCategory(self.MCategoryBox.currentText()):
             self.SCategoryBox.addItem(i)
 
+    def ResetByArea(self):
+        ResetInput()
+        if byArea:
+            self.byArea.setChecked(True)
+            self.byCategory.setChecked(False)
+        else:
+            self.byArea.setChecked(False)
+            self.byCategory.setChecked(True)
+
 class GraphScene(QMainWindow, graph_ui):
     def __init__(self, parent = None):
         super(GraphScene,self).__init__(parent)
@@ -179,6 +189,7 @@ class GraphScene(QMainWindow, graph_ui):
         self.countButton.clicked.connect(self.ShowCountData)
         self.pieButton.clicked.connect(self.ShowPieData)
         self.backButton.clicked.connect(self.ClearFigure)
+        self.backButton.clicked.connect(self.ResetByArea)
 
         for i in dm.ListMDistrict():
             self.cityBox.addItem(i)
@@ -207,7 +218,7 @@ class GraphScene(QMainWindow, graph_ui):
 
         self.fig = plt.figure(figsize=[10,4]) #plt.Figure()
         self.canvas = FigureCanvas(self.fig)
-        self.graphLayout.addWidget(self.canvas)
+        self.graphLayout.addWidget(self.canvas)#here 
 
         self.addToolBar(NavigationToolbar(self.canvas, self))
         self.canvas.show()
@@ -261,7 +272,15 @@ class GraphScene(QMainWindow, graph_ui):
         self.SCategoryBox.clear()
         for i in dm.ListSCategory(self.MCategoryBox.currentText()):
             self.SCategoryBox.addItem(i)
-        
+
+    def ResetByArea(self):
+        ResetInput()
+        if byArea:
+            self.byArea.setChecked(True)
+            self.byCategory.setChecked(False)
+        else:
+            self.byArea.setChecked(False)
+            self.byCategory.setChecked(True)
 
 class AnalysisScene(QMainWindow, analysis_ui):
     def __init__(self, parent = None):
@@ -270,6 +289,7 @@ class AnalysisScene(QMainWindow, analysis_ui):
         self.bestButton.clicked.connect(self.ShowBestData)
         self.worstButton.clicked.connect(self.ShowWorstData)
         self.backButton.clicked.connect(self.ClearFigure)
+        self.backButton.clicked.connect(self.ResetByArea)
 
         for i in dm.ListMDistrict():
             self.cityBox.addItem(i)
@@ -359,6 +379,15 @@ class AnalysisScene(QMainWindow, analysis_ui):
         for i in dm.ListSCategory(self.MCategoryBox.currentText()):
             self.SCategoryBox.addItem(i)
 
+    def ResetByArea(self):
+        ResetInput()
+        if byArea:
+            self.byArea.setChecked(True)
+            self.byCategory.setChecked(False)
+        else:
+            self.byArea.setChecked(False)
+            self.byCategory.setChecked(True)
+
 class MapScene(QMainWindow, map_ui):
     def __init__(self, parent = None):
         super(MapScene,self).__init__(parent)
@@ -433,7 +462,7 @@ def SetScreen():
     screen.addWidget(graphScene)   #graphScene index 2
     screen.addWidget(analysisScene)   #analysisScene index 3
     screen.addWidget(mapScene)      #mapScene index 4
-    screen.resize(900,600)
+    screen.resize(900, 600)
     screen.setWindowTitle("Pear129")
 
 def ShowScreen():
@@ -452,11 +481,6 @@ def SetButton():
     graphScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     analysisScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     mapScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
-
-    searchScene.backButton.clicked.connect(lambda: ResetInput())
-    graphScene.backButton.clicked.connect(lambda: ResetInput())
-    analysisScene.backButton.clicked.connect(lambda: ResetInput())
-    mapScene.backButton.clicked.connect(lambda: ResetInput())
     
 #if __name__ == '__init__':
 
