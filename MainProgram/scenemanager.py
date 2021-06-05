@@ -24,6 +24,7 @@ map_ui = uic.loadUiType("ui\searchscene_map.ui")[0]
 analysis_ui = uic.loadUiType("ui\searchscene_analysis.ui")[0]
 graph_ui = uic.loadUiType("ui\searchscene_graph.ui")[0]
 wordcloud_ui = uic.loadUiType("ui\searchscene_wc.ui")[0]
+staff_ui = uic.loadUiType("ui\staffscene.ui")[0]
 
 
 def ResetInput():
@@ -141,8 +142,9 @@ class SearchScene(QMainWindow, searchtable_ui):
         self.byArea.clicked.connect(SetByArea)
         self.byCategory.clicked.connect(SetByCategory)
 
-
-        
+        pixmap = QPixmap("img/data_title.png")
+        self.titleLabel.setPixmap(pixmap)
+                
     def ShowData(self):
         if byArea:
             li = []
@@ -228,6 +230,9 @@ class GraphScene(QMainWindow, graph_ui):
         #self.graphLayout.addWidget(self.canvas)#here 
         #self.addToolBar(NavigationToolbar(self.canvas, self))
         #self.canvas.show()
+
+        pixmap = QPixmap("img/graph_title.png")
+        self.titleLabel.setPixmap(pixmap)
         
     def ShowCountData(self):
         if byArea:
@@ -325,6 +330,9 @@ class AnalysisScene(QMainWindow, analysis_ui):
 
         self.byArea.clicked.connect(SetByArea)
         self.byCategory.clicked.connect(SetByCategory)
+
+        pixmap = QPixmap("img/analysis_title.png")
+        self.titleLabel.setPixmap(pixmap)
         
             
     def ShowBestData(self):
@@ -426,6 +434,10 @@ class MapScene(QMainWindow, map_ui):
 
         m.save(data, close_file=False)
         self.webView.setHtml(data.getvalue().decode())
+
+        pixmap = QPixmap("img/map_title.png")
+        self.titleLabel.setPixmap(pixmap)
+        
     def ShowMap(self):
         li = []
         li.append(self.cityBox.currentText())
@@ -494,6 +506,8 @@ class WordCloudScene(QMainWindow, wordcloud_ui):
         #self.graphLayout.addWidget(self.canvas)#here 
         #self.addToolBar(NavigationToolbar(self.canvas, self))
         #self.canvas.show()
+        pixmap = QPixmap("img/wc_title.png")
+        self.titleLabel.setPixmap(pixmap)
         
     def ShowBestData(self):
         if byArea:
@@ -553,6 +567,22 @@ class WordCloudScene(QMainWindow, wordcloud_ui):
             self.byArea.setChecked(False)
             self.byCategory.setChecked(True)
 
+class StaffScene(QMainWindow, staff_ui):
+    def __init__(self, parent = None):
+        super(StaffScene,self).__init__(parent)
+        self.setupUi(self)
+        self.searchButton.clicked.connect(self.ShowData)
+
+        self.img = QLabel("보고싶은 정보를 선택해주세요.", self)
+
+        self.graphLayout.addWidget(self.img)
+        pixmap = QPixmap("img/end_title.png")
+        self.titleLabel.setPixmap(pixmap)
+        
+    def ShowData(self):      
+        pixmap = QPixmap("graph/wordcloud.png")
+        self.img.setPixmap(pixmap)
+
 app = QApplication(sys.argv)
 mainScene = MainScene()
 searchScene = SearchScene()
@@ -560,6 +590,7 @@ graphScene = GraphScene()
 analysisScene = AnalysisScene()
 wordcloudScene = WordCloudScene()
 mapScene = MapScene()
+staffScene = StaffScene()
 screen = QStackedWidget()
 
 def SetScreen():
@@ -569,7 +600,8 @@ def SetScreen():
     screen.addWidget(analysisScene)   #analysisScene index 3
     screen.addWidget(wordcloudScene)    #wordcloudScene index 4
     screen.addWidget(mapScene)      #mapScene index 5
-    screen.resize(1200, 700)
+    screen.addWidget(staffScene)      #mapScene index 6
+    screen.resize(1215, 715)
     screen.setWindowTitle("Pear129")
     
 
@@ -584,6 +616,7 @@ def SetButton():
     mainScene.recommendButton.clicked.connect(lambda: screen.setCurrentIndex(3))
     mainScene.wcButton.clicked.connect(lambda: screen.setCurrentIndex(4))
     mainScene.mapButton.clicked.connect(lambda: screen.setCurrentIndex(5))
+    mainScene.staffButton.clicked.connect(lambda: screen.setCurrentIndex(6))
     mainScene.exitButton.clicked.connect(lambda: sys.exit()) #End Process
     
     searchScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
@@ -591,6 +624,7 @@ def SetButton():
     analysisScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     wordcloudScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     mapScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
+    staffScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     
 #if __name__ == '__init__':
 

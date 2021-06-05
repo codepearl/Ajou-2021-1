@@ -37,10 +37,10 @@
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;
-background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba(0, 255, 127, 100), stop:1 rgb(0, 255, 127));</string>
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 50), stop:0.166 rgba(255, 255, 0, 50), stop:0.333 rgba(0, 255, 0, 50), stop:0.5 rgba(0, 255, 255, 50), stop:0.666 rgba(0, 0, 255, 50), stop:0.833 rgba(255, 0, 255, 50), stop:1 rgba(255, 0, 0, 50))</string>
      </property>
      <property name="text">
-      <string>지도 검색(Search)</string>
+      <string>팀원 알아보기</string>
      </property>
     </widget>
     <widget class="QGroupBox" name="groupBox">
@@ -56,151 +56,86 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
      </property>
      <property name="title">
-      <string>검색할 정보</string>
+      <string>만든 사람들</string>
      </property>
-     <widget class="QLabel" name="cityLabel">
+     <widget class="QRadioButton" name="team1">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>50</y>
-        <width>64</width>
-        <height>15</height>
+        <x>20</x>
+        <y>180</y>
+        <width>108</width>
+        <height>19</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
       </property>
       <property name="text">
-       <string>시군구</string>
+       <string>원준연</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="cityBox">
+     <widget class="QRadioButton" name="teamp129">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>70</y>
-        <width>131</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="dongLabel">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>110</y>
-        <width>64</width>
-        <height>15</height>
+        <x>20</x>
+        <y>60</y>
+        <width>108</width>
+        <height>19</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
       </property>
       <property name="text">
-       <string>법정동</string>
+       <string>Pear129</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="dongBox">
+     <widget class="QRadioButton" name="team2">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>130</y>
-        <width>131</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="LCategoryLabel">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>173</y>
-        <width>81</width>
-        <height>20</height>
+        <x>20</x>
+        <y>240</y>
+        <width>108</width>
+        <height>19</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
       </property>
       <property name="text">
-       <string>업종대분류</string>
+       <string>이새결</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="LCategoryBox">
+     <widget class="QRadioButton" name="team9">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>193</y>
-        <width>131</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="MCategoryLabel">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>242</y>
-        <width>81</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
-      </property>
-      <property name="text">
-       <string>업종중분류</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="MCategoryBox">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>262</y>
-        <width>131</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="SCategoryBox">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>330</y>
-        <width>131</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="SCategoryLabel">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
+        <x>20</x>
         <y>310</y>
-        <width>81</width>
-        <height>20</height>
+        <width>108</width>
+        <height>19</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
       </property>
       <property name="text">
-       <string>업종소분류</string>
+       <string>구동용</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="teamp">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>120</y>
+        <width>108</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;맑은 고딕&quot;;</string>
+      </property>
+      <property name="text">
+       <string>박진주</string>
       </property>
      </widget>
     </widget>
@@ -231,23 +166,19 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
       </rect>
      </property>
      <property name="text">
-      <string>Map</string>
+      <string>MadeBy</string>
      </property>
     </widget>
-    <widget class="QWebEngineView" name="webView">
+    <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>175</x>
-       <y>92</y>
-       <width>999</width>
-       <height>599</height>
+       <x>174</x>
+       <y>91</y>
+       <width>1001</width>
+       <height>601</height>
       </rect>
      </property>
-     <property name="url">
-      <url>
-       <string>about:blank</string>
-      </url>
-     </property>
+     <layout class="QVBoxLayout" name="graphLayout"/>
     </widget>
    </widget>
   </widget>
@@ -263,13 +194,6 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QWebEngineView</class>
-   <extends>QWidget</extends>
-   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
