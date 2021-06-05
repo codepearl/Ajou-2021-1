@@ -21,11 +21,14 @@ def GetPie(isArea, li, manager_name):
 
 
 def Makecountplot(pure_data, isArea):
+    fig = plt.figure(figsize=(5,5))
+    fig.set_facecolor('white')
+    ax = fig.add_subplot()
     if isArea:
         made_countplot = sns.countplot(x='상권업종대분류명', data=pure_data)
     else:
         made_countplot = sns.countplot(x='법정동명', data=pure_data)
-
+    fig.savefig('graph/count.png')
     return made_countplot
 
 
@@ -33,7 +36,7 @@ def MakePie(pure_data, isArea):
     # if isArea:
     frequency, labels, explode = MakePieData(pure_data, isArea)
 
-    fig = plt.figure(figsize=(8,8))
+    fig = plt.figure(figsize=(5,5))
     fig.set_facecolor('white')
     ax = fig.add_subplot()
 
@@ -77,6 +80,7 @@ def MakePie(pure_data, isArea):
         #     ax.text(x, y, text, ha='center', va='center', fontsize=12)
     plt.legend(made_pie[0], labels, loc='upper right')
 
+    fig.savefig('graph/pie.png')
     # else:
     #     ratio_list, labels_list = MakePieData(pure_data, isArea)
     #     made_pie = plt.pie(ratio_list, labels=labels_list, autopct='%.1f%%')
@@ -112,7 +116,7 @@ def MakePieData(pure_data, isArea):
 
 
 if __name__ == '__main__':
-    # return_graph = GetCountplot(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
+    #return_graph = GetCountplot(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
     return_graph = GetPie(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
     plt.show()
 

@@ -8,6 +8,7 @@ import os, io
 import folium
 import matplotlib.pyplot as plt
 
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import *
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5 import uic, QtCore
@@ -216,12 +217,14 @@ class GraphScene(QMainWindow, graph_ui):
         self.byArea.clicked.connect(SetByArea)
         self.byCategory.clicked.connect(SetByCategory)
 
-        self.fig = plt.figure(figsize=[10,4]) #plt.Figure()
-        self.canvas = FigureCanvas(self.fig)
-        self.graphLayout.addWidget(self.canvas)#here 
-
-        self.addToolBar(NavigationToolbar(self.canvas, self))
-        self.canvas.show()
+        #self.fig = plt.figure(figsize=[10,4]) #plt.Figure()
+        #self.canvas = FigureCanvas(self.fig)
+        self.img = QLabel("이 곳에 그래프가 나타납니다. 데이터 양이 많은 경우 오래 걸릴 수 있습니다.", self)
+        #self.img.setAlignment(AlignCenter)
+        self.graphLayout.addWidget(self.img)
+        #self.graphLayout.addWidget(self.canvas)#here 
+        #self.addToolBar(NavigationToolbar(self.canvas, self))
+        #self.canvas.show()
         
     def ShowCountData(self):
         if byArea:
@@ -233,10 +236,13 @@ class GraphScene(QMainWindow, graph_ui):
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-        plt.clf()
-        gh = gm.GetCountplot(byArea, li, manager_name)
-        self.fig = plt.Figure()
-        self.canvas.draw()
+        #plt.clf()
+        #gh = gm.GetCountplot(byArea, li, manager_name)
+        gm.GetCountplot(byArea, li, manager_name)
+        pixmap = QPixmap("graph/count.png")
+        self.img.setPixmap(pixmap)
+        #self.fig = plt.Figure()
+        #self.canvas.draw()
         
     def ShowPieData(self):
         if byArea:
@@ -250,7 +256,9 @@ class GraphScene(QMainWindow, graph_ui):
             li.append(self.SCategoryBox.currentText())
         #have issue            
 
-        #gh = gm.GetPie(byArea, li, manager_name)
+        gh = gm.GetPie(byArea, li, manager_name)
+        pixmap = QPixmap("graph/pie.png")
+        self.img.setPixmap(pixmap)
         #plt.show()
         #self.fig = plt.Figure()
         #self.canvas.draw()
