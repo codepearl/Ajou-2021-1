@@ -603,7 +603,7 @@ def SetScreen():
     screen.addWidget(staffScene)      #mapScene index 6
     screen.resize(1215, 715)
     screen.setWindowTitle("Pear129")
-    
+    screen.setWindowIcon(QIcon("img/icon.png"))
 
 def ShowScreen():
     screen.show()
