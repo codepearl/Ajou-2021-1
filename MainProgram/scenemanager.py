@@ -23,6 +23,7 @@ from PyQt5 import uic, QtCore
 
 manager_name = "scenemanager"
 
+
 #   1. Load predefined UI files by QtDesigner
 
 main_ui = uic.loadUiType("ui\mainscene.ui")[0]
@@ -34,7 +35,7 @@ wordcloud_ui = uic.loadUiType("ui\searchscene_wc.ui")[0]
 staff_ui = uic.loadUiType("ui\staffscene.ui")[0]
 
 
-#   2. Global variabe control for radiobuttons (byArea/byCategory)
+#   2. Global variable control for radiobuttons (byArea/byCategory)
 
 def ResetInput():
     global byArea
@@ -606,9 +607,9 @@ def SetButton():
     wordcloudScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     mapScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     staffScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
-    
-#if __name__ == '__init__':
 
+
+#   6. Main
 
 if __name__ == '__main__':
     SetScreen()
