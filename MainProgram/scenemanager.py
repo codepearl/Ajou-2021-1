@@ -164,18 +164,18 @@ class SearchScene(QMainWindow, searchtable_ui):
         self.titleLabel.setPixmap(title)
                 
     def ShowData(self):
+        li = []
+        
         if byArea:
-            li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
-            df = dm.DataSearch(byArea, li, manager_name)
         else:
-            li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            df = dm.DataSearch(byArea, li, manager_name)
 
+        df = dm.DataSearch(byArea, li, manager_name)
+        
         df = df.reset_index()
         model = DataFrameModel(df)
         self.tableView.setModel(model)
@@ -197,6 +197,7 @@ class SearchScene(QMainWindow, searchtable_ui):
 
     def ResetByArea(self):
         ResetInput()
+        
         if byArea:
             self.byArea.setChecked(True)
             self.byCategory.setChecked(False)
@@ -246,32 +247,34 @@ class GraphScene(QMainWindow, graph_ui):
         self.titleLabel.setPixmap(title)
         
     def ShowCountData(self):
+        li = []
+        
         if byArea:
-            li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
         else:
-            li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
             
         gm.GetCountplot(byArea, li, manager_name)
+        
         graph = QPixmap("graph/count.png")
         self.img.setPixmap(graph)
 
     def ShowPieData(self):
+        li = []
+        
         if byArea:
-            li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
         else:
-            li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
             
-        gh = gm.GetPie(byArea, li, manager_name)
+        gm.GetPie(byArea, li, manager_name)
+        
         graph = QPixmap("graph/pie.png")
         self.img.setPixmap(graph)
 
@@ -292,6 +295,7 @@ class GraphScene(QMainWindow, graph_ui):
 
     def ResetByArea(self):
         ResetInput()
+        
         if byArea:
             self.byArea.setChecked(True)
             self.byCategory.setChecked(False)
@@ -337,33 +341,33 @@ class AnalysisScene(QMainWindow, analysis_ui):
         self.titleLabel.setPixmap(title)
             
     def ShowBestData(self):
+        li = []
+        
         if byArea:
-            li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
-            df = am.FreqBottom(byArea, li)
         else:
-            li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            df = am.FreqBottom(byArea, li)
+
+        df = am.FreqBottom(byArea, li)
 
         model = DataFrameModel(df)
         self.tableView.setModel(model)
         
     def ShowWorstData(self):
+        li = []
+        
         if byArea:
-            li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
-            df = am.FreqTop(byArea, li)
         else:
-            li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            df = am.FreqTop(byArea, li)
+
+        df = am.FreqTop(byArea, li)
             
         model = DataFrameModel(df)
         self.tableView.setModel(model)
@@ -385,6 +389,7 @@ class AnalysisScene(QMainWindow, analysis_ui):
 
     def ResetByArea(self):
         ResetInput()
+        
         if byArea:
             self.byArea.setChecked(True)
             self.byCategory.setChecked(False)
@@ -491,33 +496,33 @@ class WordCloudScene(QMainWindow, wordcloud_ui):
         self.titleLabel.setPixmap(title)
         
     def ShowBestData(self):
+        li = []
+        
         if byArea:
-            li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
-            am.WordCloudBottom(byArea, li)
         else:
-            li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            am.WordCloudBottom(byArea, li)
+
+        am.WordCloudBottom(byArea, li)
             
         graph = QPixmap("graph/wordcloud.png")
         self.img.setPixmap(graph)
         
     def ShowWorstData(self):
+        li = []
+        
         if byArea:
-            li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
-            am.WordCloudTop(byArea, li)
         else:
-            li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-            am.WordCloudTop(byArea, li)        
+
+        am.WordCloudTop(byArea, li)        
 
         graph = QPixmap("graph/wordcloud.png")
         self.img.setPixmap(graph)
@@ -539,6 +544,7 @@ class WordCloudScene(QMainWindow, wordcloud_ui):
 
     def ResetByArea(self):
         ResetInput()
+        
         if byArea:
             self.byArea.setChecked(True)
             self.byCategory.setChecked(False)
@@ -554,10 +560,10 @@ class StaffScene(QMainWindow, staff_ui):
         self.searchButton.clicked.connect(self.ShowData)
 
         self.img = QLabel("보고싶은 정보를 선택해주세요.", self)
-
         self.graphLayout.addWidget(self.img)
-        pixmap = QPixmap("img/end_title.png")
-        self.titleLabel.setPixmap(pixmap)
+        
+        title = QPixmap("img/end_title.png")
+        self.titleLabel.setPixmap(title)
         
     def ShowData(self):      
         graph = QPixmap("graph/wordcloud.png")
