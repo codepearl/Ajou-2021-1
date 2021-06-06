@@ -1,6 +1,7 @@
 import pandas as pd
 
-pure_data = pd.read_csv('Dummy_File.csv', encoding='cp949')
+#pure_data = pd.read_csv('data/Merge_File_All_Col_Remove_r2.csv', encoding='cp949')
+pure_data = pd.read_csv('data/Dummy_File.csv', encoding='cp949')
 
 
 def DataSearch(isArea, li, manager_name):

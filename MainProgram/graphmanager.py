@@ -8,14 +8,14 @@ manager_name = "graphmanager"
 
 def GetCountplot(isArea, li, manager_name):
     pure_data = dm.DataSearch(isArea, li, manager_name)
-    plt.rc('font', family='NanumGothic')
+    plt.rc('font', family='Malgun Gothic')
     return_countplot = Makecountplot(pure_data, isArea)
     return return_countplot
 
 
 def GetPie(isArea, li, manager_name):
     pure_data = dm.DataSearch(isArea, li, manager_name)
-    plt.rc('font', family='NanumGothic')
+    plt.rc('font', family='Malgun Gothic')
     return_pie = MakePie(pure_data, isArea)
     return return_pie
 
