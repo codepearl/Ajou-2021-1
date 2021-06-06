@@ -1,22 +1,29 @@
+########################################################################
+#                                                                      #
+#   @copyright  Copyright (c) 2021 Pear129, All rights reserved.       #
+#   @author     codepearl                                              #
+#                                                                      #
+########################################################################
+
+
+#   0. Import modules
+
 import datamanager as dm
 import graphmanager as gm
 import analysismanager as am
 import mapmanager as mm
 import pandas as pd
-import sys
-import os, io
-import folium
-import matplotlib.pyplot as plt
+import sys, io
 
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import *
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5 import uic, QtCore
-from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
+
 
 manager_name = "scenemanager"
+
+#   1. Load predefined UI files by QtDesigner
 
 main_ui = uic.loadUiType("ui\mainscene.ui")[0]
 searchtable_ui = uic.loadUiType("ui\searchscene_table.ui")[0]
@@ -26,6 +33,8 @@ graph_ui = uic.loadUiType("ui\searchscene_graph.ui")[0]
 wordcloud_ui = uic.loadUiType("ui\searchscene_wc.ui")[0]
 staff_ui = uic.loadUiType("ui\staffscene.ui")[0]
 
+
+#   2. Global variabe control for radiobuttons (byArea/byCategory)
 
 def ResetInput():
     global byArea
@@ -38,6 +47,9 @@ def SetByArea():
 def SetByCategory():
     global byArea
     byArea = False
+
+
+#   3. Class definition for tableview usage
 
 class DataFrameModel(QtCore.QAbstractTableModel):
     DtypeRole = QtCore.Qt.UserRole + 1000
@@ -57,7 +69,7 @@ class DataFrameModel(QtCore.QAbstractTableModel):
 
     dataFrame = QtCore.pyqtProperty(pd.DataFrame, fget=DataFrame, fset=SetDataFrame)
 
-    #Ignore code conventions because of overriding
+    # Ignore code conventions because of overriding
     @QtCore.pyqtSlot(int, QtCore.Qt.Orientation, result=str)
     def headerData(self, section: int, orientation: QtCore.Qt.Orientation, role: int = QtCore.Qt.DisplayRole):
         if role == QtCore.Qt.DisplayRole:
@@ -102,13 +114,18 @@ class DataFrameModel(QtCore.QAbstractTableModel):
         }
         return roles
 
+
+#   4. Scene definition
+
 class MainScene(QMainWindow, main_ui):
     def __init__(self, parent = None):
         super(MainScene,self).__init__(parent)
         self.setupUi(self)
         ResetInput()
-        pixmap = QPixmap("img/title.png")
-        self.mainLabel.setPixmap(pixmap)
+        
+        title = QPixmap("img/title.png")
+        self.mainLabel.setPixmap(title)
+
 
 class SearchScene(QMainWindow, searchtable_ui):
     def __init__(self, parent = None):
@@ -142,8 +159,8 @@ class SearchScene(QMainWindow, searchtable_ui):
         self.byArea.clicked.connect(SetByArea)
         self.byCategory.clicked.connect(SetByCategory)
 
-        pixmap = QPixmap("img/data_title.png")
-        self.titleLabel.setPixmap(pixmap)
+        title = QPixmap("img/data_title.png")
+        self.titleLabel.setPixmap(title)
                 
     def ShowData(self):
         if byArea:
@@ -151,14 +168,12 @@ class SearchScene(QMainWindow, searchtable_ui):
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
             df = dm.DataSearch(byArea, li, manager_name)
-            
         else:
             li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
             df = dm.DataSearch(byArea, li, manager_name)
-
 
         df = df.reset_index()
         model = DataFrameModel(df)
@@ -188,13 +203,14 @@ class SearchScene(QMainWindow, searchtable_ui):
             self.byArea.setChecked(False)
             self.byCategory.setChecked(True)
 
+
 class GraphScene(QMainWindow, graph_ui):
     def __init__(self, parent = None):
         super(GraphScene,self).__init__(parent)
+        
         self.setupUi(self)
         self.countButton.clicked.connect(self.ShowCountData)
         self.pieButton.clicked.connect(self.ShowPieData)
-        self.backButton.clicked.connect(self.ClearFigure)
         self.backButton.clicked.connect(self.ResetByArea)
 
         for i in dm.ListMDistrict():
@@ -222,17 +238,11 @@ class GraphScene(QMainWindow, graph_ui):
         self.byArea.clicked.connect(SetByArea)
         self.byCategory.clicked.connect(SetByCategory)
 
-        #self.fig = plt.figure(figsize=[10,4]) #plt.Figure()
-        #self.canvas = FigureCanvas(self.fig)
         self.img = QLabel("이 곳에 그래프가 나타납니다. 데이터 양이 많은 경우 오래 걸릴 수 있습니다.", self)
-        #self.img.setAlignment(AlignCenter)
         self.graphLayout.addWidget(self.img)
-        #self.graphLayout.addWidget(self.canvas)#here 
-        #self.addToolBar(NavigationToolbar(self.canvas, self))
-        #self.canvas.show()
 
-        pixmap = QPixmap("img/graph_title.png")
-        self.titleLabel.setPixmap(pixmap)
+        title = QPixmap("img/graph_title.png")
+        self.titleLabel.setPixmap(title)
         
     def ShowCountData(self):
         if byArea:
@@ -244,14 +254,11 @@ class GraphScene(QMainWindow, graph_ui):
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-        #plt.clf()
-        #gh = gm.GetCountplot(byArea, li, manager_name)
+            
         gm.GetCountplot(byArea, li, manager_name)
-        pixmap = QPixmap("graph/count.png")
-        self.img.setPixmap(pixmap)
-        #self.fig = plt.Figure()
-        #self.canvas.draw()
-        
+        graph = QPixmap("graph/count.png")
+        self.img.setPixmap(graph)
+
     def ShowPieData(self):
         if byArea:
             li = []
@@ -262,17 +269,10 @@ class GraphScene(QMainWindow, graph_ui):
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
-        #have issue            
-
+            
         gh = gm.GetPie(byArea, li, manager_name)
-        pixmap = QPixmap("graph/pie.png")
-        self.img.setPixmap(pixmap)
-        #plt.show()
-        #self.fig = plt.Figure()
-        #self.canvas.draw()
-    def ClearFigure(self):
-        #plt.clf()
-        plt.cla()
+        graph = QPixmap("graph/pie.png")
+        self.img.setPixmap(graph)
 
     def SetDistrict(self):
         self.dongBox.clear()
@@ -297,6 +297,7 @@ class GraphScene(QMainWindow, graph_ui):
         else:
             self.byArea.setChecked(False)
             self.byCategory.setChecked(True)
+
 
 class AnalysisScene(QMainWindow, analysis_ui):
     def __init__(self, parent = None):
@@ -331,18 +332,15 @@ class AnalysisScene(QMainWindow, analysis_ui):
         self.byArea.clicked.connect(SetByArea)
         self.byCategory.clicked.connect(SetByCategory)
 
-        pixmap = QPixmap("img/analysis_title.png")
-        self.titleLabel.setPixmap(pixmap)
-        
+        title = QPixmap("img/analysis_title.png")
+        self.titleLabel.setPixmap(title)
             
     def ShowBestData(self):
-        plt.cla()
         if byArea:
             li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
             df = am.FreqBottom(byArea, li)
-            
         else:
             li = []
             li.append(self.LCategoryBox.currentText())
@@ -350,34 +348,25 @@ class AnalysisScene(QMainWindow, analysis_ui):
             li.append(self.SCategoryBox.currentText())
             df = am.FreqBottom(byArea, li)
 
-        #df = df.reset_index()
         model = DataFrameModel(df)
         self.tableView.setModel(model)
-        
         
     def ShowWorstData(self):
-        plt.cla()
         if byArea:
             li = []
             li.append(self.cityBox.currentText())
             li.append(self.dongBox.currentText())
             df = am.FreqTop(byArea, li)
-            
         else:
             li = []
             li.append(self.LCategoryBox.currentText())
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
             df = am.FreqTop(byArea, li)
-
-        #df = df.reset_index()
-        
+            
         model = DataFrameModel(df)
         self.tableView.setModel(model)
-        
-    def ClearFigure(self):
-        plt.cla()
-        
+
     def SetDistrict(self):
         self.dongBox.clear()
         for i in dm.ListSDistrict(self.cityBox.currentText()):
@@ -402,6 +391,7 @@ class AnalysisScene(QMainWindow, analysis_ui):
             self.byArea.setChecked(False)
             self.byCategory.setChecked(True)
 
+
 class MapScene(QMainWindow, map_ui):
     def __init__(self, parent = None):
         super(MapScene,self).__init__(parent)
@@ -424,13 +414,12 @@ class MapScene(QMainWindow, map_ui):
         self.MCategoryBox.currentIndexChanged.connect(self.SetSCategory)
         
         data = io.BytesIO()
-        m = mm.StartMap();
-
+        m = mm.StartMap()
         m.save(data, close_file=False)
         self.webView.setHtml(data.getvalue().decode())
 
-        pixmap = QPixmap("img/map_title.png")
-        self.titleLabel.setPixmap(pixmap)
+        title = QPixmap("img/map_title.png")
+        self.titleLabel.setPixmap(title)
         
     def ShowMap(self):
         li = []
@@ -439,8 +428,9 @@ class MapScene(QMainWindow, map_ui):
         li.append(self.LCategoryBox.currentText())
         li.append(self.MCategoryBox.currentText())
         li.append(self.SCategoryBox.currentText())
-        m = mm.Map(len(li),li)
+
         data = io.BytesIO()
+        m = mm.Map(len(li),li)
         m.save(data, close_file=False)
         self.webView.setHtml(data.getvalue().decode())
 
@@ -458,6 +448,7 @@ class MapScene(QMainWindow, map_ui):
         self.SCategoryBox.clear()
         for i in dm.ListSCategory(self.MCategoryBox.currentText()):
             self.SCategoryBox.addItem(i)
+
             
 class WordCloudScene(QMainWindow, wordcloud_ui):
     def __init__(self, parent = None):
@@ -492,16 +483,11 @@ class WordCloudScene(QMainWindow, wordcloud_ui):
         self.byArea.clicked.connect(SetByArea)
         self.byCategory.clicked.connect(SetByCategory)
 
-        #self.fig = plt.figure(figsize=[10,4]) #plt.Figure()
-        #self.canvas = FigureCanvas(self.fig)
         self.img = QLabel("이 곳에 그래프가 나타납니다. 데이터 양이 많은 경우 오래 걸릴 수 있습니다.", self)
-        #self.img.setAlignment(AlignCenter)
         self.graphLayout.addWidget(self.img)
-        #self.graphLayout.addWidget(self.canvas)#here 
-        #self.addToolBar(NavigationToolbar(self.canvas, self))
-        #self.canvas.show()
-        pixmap = QPixmap("img/wc_title.png")
-        self.titleLabel.setPixmap(pixmap)
+        
+        title = QPixmap("img/wc_title.png")
+        self.titleLabel.setPixmap(title)
         
     def ShowBestData(self):
         if byArea:
@@ -515,8 +501,9 @@ class WordCloudScene(QMainWindow, wordcloud_ui):
             li.append(self.MCategoryBox.currentText())
             li.append(self.SCategoryBox.currentText())
             am.WordCloudBottom(byArea, li)
-        pixmap = QPixmap("graph/wordcloud.png")
-        self.img.setPixmap(pixmap)
+            
+        graph = QPixmap("graph/wordcloud.png")
+        self.img.setPixmap(graph)
         
     def ShowWorstData(self):
         if byArea:
@@ -531,11 +518,8 @@ class WordCloudScene(QMainWindow, wordcloud_ui):
             li.append(self.SCategoryBox.currentText())
             am.WordCloudTop(byArea, li)        
 
-        pixmap = QPixmap("graph/wordcloud.png")
-        self.img.setPixmap(pixmap)
-    def ClearFigure(self):
-        #plt.clf()
-        plt.cla()
+        graph = QPixmap("graph/wordcloud.png")
+        self.img.setPixmap(graph)
 
     def SetDistrict(self):
         self.dongBox.clear()
@@ -561,6 +545,7 @@ class WordCloudScene(QMainWindow, wordcloud_ui):
             self.byArea.setChecked(False)
             self.byCategory.setChecked(True)
 
+
 class StaffScene(QMainWindow, staff_ui):
     def __init__(self, parent = None):
         super(StaffScene,self).__init__(parent)
@@ -574,8 +559,11 @@ class StaffScene(QMainWindow, staff_ui):
         self.titleLabel.setPixmap(pixmap)
         
     def ShowData(self):      
-        pixmap = QPixmap("graph/wordcloud.png")
-        self.img.setPixmap(pixmap)
+        graph = QPixmap("graph/wordcloud.png")
+        self.img.setPixmap(graph)
+
+
+#   5. Create app, screen, scenes
 
 app = QApplication(sys.argv)
 mainScene = MainScene()
@@ -588,13 +576,13 @@ staffScene = StaffScene()
 screen = QStackedWidget()
 
 def SetScreen():
-    screen.addWidget(mainScene)     #mainScene index 0
-    screen.addWidget(searchScene)   #searchScene index 1
-    screen.addWidget(graphScene)   #graphScene index 2
-    screen.addWidget(analysisScene)   #analysisScene index 3
-    screen.addWidget(wordcloudScene)    #wordcloudScene index 4
-    screen.addWidget(mapScene)      #mapScene index 5
-    screen.addWidget(staffScene)      #mapScene index 6
+    screen.addWidget(mainScene)         # mainScene         index 0
+    screen.addWidget(searchScene)       # searchScene       index 1
+    screen.addWidget(graphScene)        # graphScene        index 2
+    screen.addWidget(analysisScene)     # analysisScene     index 3
+    screen.addWidget(wordcloudScene)    # wordcloudScene    index 4
+    screen.addWidget(mapScene)          # mapScene          index 5
+    screen.addWidget(staffScene)        # staffScene        index 6
     screen.resize(1215, 715)
     screen.setWindowTitle("Pear129")
     screen.setWindowIcon(QIcon("img/icon.png"))
@@ -602,7 +590,6 @@ def SetScreen():
 def ShowScreen():
     screen.show()
     app.exec_()
-    #nonValue-Returning
     
 def SetButton():
     mainScene.tableButton.clicked.connect(lambda: screen.setCurrentIndex(1))
@@ -611,7 +598,7 @@ def SetButton():
     mainScene.wcButton.clicked.connect(lambda: screen.setCurrentIndex(4))
     mainScene.mapButton.clicked.connect(lambda: screen.setCurrentIndex(5))
     mainScene.staffButton.clicked.connect(lambda: screen.setCurrentIndex(6))
-    mainScene.exitButton.clicked.connect(lambda: sys.exit()) #End Process
+    mainScene.exitButton.clicked.connect(lambda: sys.exit())    #End Process
     
     searchScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
     graphScene.backButton.clicked.connect(lambda: screen.setCurrentIndex(0))
@@ -624,7 +611,6 @@ def SetButton():
 
 
 if __name__ == '__main__':
-    
     SetScreen()
     SetButton()
     ShowScreen()
