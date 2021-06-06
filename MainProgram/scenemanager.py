@@ -424,13 +424,7 @@ class MapScene(QMainWindow, map_ui):
         self.MCategoryBox.currentIndexChanged.connect(self.SetSCategory)
         
         data = io.BytesIO()
-        #Temp 
-        coordinate = (36.3, 127.8)
-        m = folium.Map(
-            tiles='cartodbpositron',
-            zoom_start=7,
-            location=coordinate
-        )
+        m = mm.StartMap();
 
         m.save(data, close_file=False)
         self.webView.setHtml(data.getvalue().decode())
