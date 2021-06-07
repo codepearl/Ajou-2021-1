@@ -566,8 +566,8 @@ class StaffScene(QMainWindow, staff_ui):
         self.titleLabel.setPixmap(title)
         
     def ShowData(self):      
-        graph = QPixmap("graph/wordcloud.png")
-        self.img.setPixmap(graph)
+        content = QPixmap("img/pear129.png")
+        self.img.setPixmap(content)
 
 
 #   5. Create app, screen, scenes
