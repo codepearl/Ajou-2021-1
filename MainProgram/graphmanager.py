@@ -8,24 +8,27 @@ manager_name = "graphmanager"
 
 def GetCountplot(isArea, li, manager_name):
     pure_data = dm.DataSearch(isArea, li, manager_name)
-    plt.rc('font', family='NanumGothic')
+    plt.rc('font', family='Malgun Gothic')
     return_countplot = Makecountplot(pure_data, isArea)
     return return_countplot
 
 
 def GetPie(isArea, li, manager_name):
     pure_data = dm.DataSearch(isArea, li, manager_name)
-    plt.rc('font', family='NanumGothic')
+    plt.rc('font', family='Malgun Gothic')
     return_pie = MakePie(pure_data, isArea)
     return return_pie
 
 
 def Makecountplot(pure_data, isArea):
+    fig = plt.figure(figsize=(10,6))
+    fig.set_facecolor('white')
+    ax = fig.add_subplot()
     if isArea:
         made_countplot = sns.countplot(x='상권업종대분류명', data=pure_data, )
     else:
         made_countplot = sns.countplot(x='법정동명', data=pure_data)
-
+    fig.savefig('graph/count.png')
     return made_countplot
 
 
@@ -33,7 +36,7 @@ def MakePie(pure_data, isArea):
     # if isArea:
     frequency, labels, explode = MakePieData(pure_data, isArea)
 
-    fig = plt.figure(figsize=(8,8))
+    fig = plt.figure(figsize=(10,6))
     fig.set_facecolor('white')
     ax = fig.add_subplot()
 
@@ -77,6 +80,7 @@ def MakePie(pure_data, isArea):
         #     ax.text(x, y, text, ha='center', va='center', fontsize=12)
     plt.legend(made_pie[0], labels, loc='upper right')
 
+    fig.savefig('graph/pie.png')
     # else:
     #     ratio_list, labels_list = MakePieData(pure_data, isArea)
     #     made_pie = plt.pie(ratio_list, labels=labels_list, autopct='%.1f%%')
@@ -112,7 +116,23 @@ def MakePieData(pure_data, isArea):
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     return_graph = GetCountplot(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
     # return_graph = GetPie(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
     plt.xticks(rotation=45)
     plt.show()
+=======
+    #return_graph = GetCountplot(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
+    return_graph = GetPie(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
+    plt.show()
+
+'''
+CODE REIVEW by pearl
+
+고칠게 더 없어서 아이디어 첨언합니다.
+만약 여러 형태의 그래프를 제공할 예정이라면, 그에 대한 함수를 나누고,
+sm에 어떤 형태로 만들건지 파라미터를 받아와서 제공을 하는 형태로
+해당 모듈의 기능을 더 확장할 수 있을 것 같습니다.
+(하라는 얘기는 아니고..^^ 본인의 뛰어남을 증명하기 위해, 더 많은 기능을 넣을 수 있겠죠)
+'''
+>>>>>>> f2e7d8690ea3e0b2112f8a368465cae220f2b0b4
