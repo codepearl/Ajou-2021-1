@@ -558,17 +558,38 @@ class StaffScene(QMainWindow, staff_ui):
         super(StaffScene,self).__init__(parent)
         self.setupUi(self)
         self.searchButton.clicked.connect(self.ShowData)
+        self.backButton.clicked.connect(self.ResetSelected)
 
         self.img = QLabel("보고싶은 정보를 선택해주세요.", self)
         self.graphLayout.addWidget(self.img)
         
         title = QPixmap("img/end_title.png")
         self.titleLabel.setPixmap(title)
+
+        self.teamp129.setChecked(True)
         
-    def ShowData(self):      
-        content = QPixmap("img/pear129.png")
+    def ShowData(self):
+        if self.teamp129.isChecked():
+            content = QPixmap("img/pear129.png")
+        elif self.teamp.isChecked():
+            content = QPixmap("img/pearl.png")
+        elif self.team1.isChecked():
+            content = QPixmap("img/1jy.png")
+        elif self.team2.isChecked():
+            content = QPixmap("img/249.png")
+        elif self.team9.isChecked():
+            content = QPixmap("img/9dy.png")
+        else:
+            content = QPixmap("img/pear129.png")
         self.img.setPixmap(content)
 
+    def ResetSelected(self):
+        self.teamp129.setChecked(True)
+        self.teamp.setChecked(False)
+        self.team1.setChecked(False)
+        self.team2.setChecked(False)
+        self.team9.setChecked(False)
+        
 
 #   5. Create app, screen, scenes
 
