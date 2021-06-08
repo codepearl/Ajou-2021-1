@@ -78,7 +78,7 @@ def MakePie(pure_data, isArea):
         #     x = (r / 2) * np.cos(np.pi / 180 * ((ang1 + ang2) / 2)) + center[0]  ## 텍스트 x좌표
         #     y = (r / 2) * np.sin(np.pi / 180 * ((ang1 + ang2) / 2)) + center[1]  ## 텍스트 y좌표
         #     ax.text(x, y, text, ha='center', va='center', fontsize=12)
-    plt.legend(made_pie[0], labels, loc='upper right')
+    # plt.legend(made_pie[0], labels, loc='upper right') 범례
 
     fig.savefig('graph/pie.png')
     # else:
@@ -112,11 +112,14 @@ def MakePieData(pure_data, isArea):
         for j in count_list:
             ratio_list.append(j / len(list_filtered_data) * 100)
             explode.append(0.1)
+    # for k in len(ratio_list): 기타로 묶기
+    #     if ratio_list[k] < 3:
+
     return ratio_list, list_filtered_data2, explode
 
 
 if __name__ == '__main__':
-    return_graph = GetCountplot(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
-    # return_graph = GetPie(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
-    plt.xticks(rotation=45)
+    # return_graph = GetCountplot(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
+    return_graph = GetPie(False, ['음식', '한식', '갈비/삼겹살'], "graphmanager")
+    # plt.xticks(rotation=45)
     plt.show()
