@@ -83,7 +83,7 @@ def ShowLoc ( li ): # Show Map
             
         folium.Marker(location = [data.loc[a,"위도"],data.loc[a,"경도"]],
                       zoom_start = 11,
-                      popup = ["위도:", data.loc[a,"위도"],"경도:", data.loc[a,"경도"]], # 마커를 마우스로 클릭하면 위도 경도 표
+                      popup = ["위도:", data.loc[a,"위도"],"경도:", data.loc[a,"경도"]], # 마커를 마우스로 클릭하면 위도 경도 표시
                       tooltip = data.loc[a,"상호명"], # 마커에 마우스를 대면 상호명 표시
                       icon=folium.Icon( color = color, icon = icon )).add_to(marker_cluster)
         
