@@ -2,6 +2,7 @@
 #                                                                      #
 #   @copyright  Copyright (c) 2021 Pear129, All rights reserved.       #
 #   @author     codepearl                                              #
+#   @Ajou       융합시스템공학과 박진주  202020648                        #
 #                                                                      #
 ########################################################################
 
@@ -35,7 +36,7 @@ wordcloud_ui = uic.loadUiType("ui\searchscene_wc.ui")[0]
 staff_ui = uic.loadUiType("ui\staffscene.ui")[0]
 
 
-#   2. Global variable control for radiobuttons (byArea/byCategory)
+#   2. Global variable control for radiobuttons (Search by Area/Category)
 
 def ResetInput():
     global byArea
@@ -176,7 +177,7 @@ class SearchScene(QMainWindow, searchtable_ui):
 
         df = dm.DataSearch(byArea, li, manager_name)
         
-        df = df.reset_index()
+        df.reset_index(inplace=True, drop=True)
         model = DataFrameModel(df)
         self.tableView.setModel(model)
 
