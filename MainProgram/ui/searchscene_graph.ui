@@ -290,9 +290,9 @@ background-color:qlineargradient(spread:pad, x0:1, y0:1, x0:1, y1:1, stop:0 rgba
      <property name="geometry">
       <rect>
        <x>174</x>
-       <y>91</y>
+       <y>71</y>
        <width>1001</width>
-       <height>601</height>
+       <height>621</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="graphLayout"/>

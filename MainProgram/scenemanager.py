@@ -18,6 +18,7 @@ import sys, io
 
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5 import uic, QtCore
 
@@ -244,6 +245,8 @@ class GraphScene(QMainWindow, graph_ui):
         self.img = QLabel("이 곳에 그래프가 나타납니다. 데이터 양이 많은 경우 오래 걸릴 수 있습니다.", self)
         self.graphLayout.addWidget(self.img)
 
+        self.img.setAlignment(Qt.AlignCenter)
+
         title = QPixmap("img/graph_title.png")
         self.titleLabel.setPixmap(title)
         
@@ -262,6 +265,7 @@ class GraphScene(QMainWindow, graph_ui):
         
         graph = QPixmap("graph/count.png")
         self.img.setPixmap(graph)
+        self.img.setAlignment(Qt.AlignCenter)
 
     def ShowPieData(self):
         li = []
@@ -278,6 +282,7 @@ class GraphScene(QMainWindow, graph_ui):
         
         graph = QPixmap("graph/pie.png")
         self.img.setPixmap(graph)
+        self.img.setAlignment(Qt.AlignCenter)
 
     def SetDistrict(self):
         self.dongBox.clear()

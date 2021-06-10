@@ -30,14 +30,14 @@ def Makecountplot(pure_data, isArea):
         made_countplot = sns.countplot(x='법정동명', data=pure_data)
 
     plt.xticks(rotation=45)
-    fig.savefig('graph/count.png')
+    fig.savefig('graph/count.png', bbox_inches='tight')#, pad_inches=0)
     return made_countplot
 
 
 def MakePie(pure_data, isArea):
     frequency, labels = MakePieData(pure_data, isArea)  # MakePieData 함수를 통해 Pie 그래프를 위한 데이터를 반환 받음
 
-    fig = plt.figure(figsize=(10, 8))  # 캔버스 생성
+    fig = plt.figure(figsize=(10, 6))  # 캔버스 생성
     fig.set_facecolor('white')  # 배경색 설정
     ax = fig.add_subplot()  # 프레임 생성
 
@@ -86,7 +86,7 @@ def MakePie(pure_data, isArea):
             ax.text(x, y, added_text, ha='center', va='center', fontsize=12)
     # plt.legend(made_pie[0], labels, loc='right')                  # 필요성이 적어서 범례 사용하지 않음
 
-    fig.savefig('graph/pie.png')
+    fig.savefig('graph/pie.png')#, bbox_inches='tight')#, pad_inches=0)
 
     return made_pie
 
