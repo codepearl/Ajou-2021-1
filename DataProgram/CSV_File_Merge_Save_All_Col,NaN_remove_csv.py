@@ -1,9 +1,19 @@
+########################################################################
+#                                                                      #
+#   @copyright  Copyright (c) 2021 Pear129, All rights reserved.       #
+#   @author     GuDY                                                   #
+#   @Ajou       융합시스템공학과 구동용  202020636                         #
+#                                                                      #
+########################################################################
+
+# 파일 경로내에 있는 모든 csv 파일 통합
+
 import pandas as pd
 import glob
 
-#파일 경로 및 저장 위치 실행시 변경 필수
+#파일 경로와 저장 위치 및 파일명 변경 해야함.
 path = r'C:\Users\DY\Downloads\소상공인시장진흥공단_상가(상권)정보_20210331\test\Merge.py'   # use your path
-output_file= r'C:\Users\DY\Downloads\소상공인시장진흥공단_상가(상권)정보_20210331\test\Merge.py\testfile.csv' # 마지막 저장될 파일 이름
+output_file= r'C:\Users\DY\Downloads\소상공인시장진흥공단_상가(상권)정보_20210331\test\Merge.py\MergeFile.csv' # 마지막 저장될 파일 이름
 all_files = glob.glob(path + "/*.csv")
 
 li = []
@@ -20,5 +30,6 @@ for filename in all_files:
     li.append(df)
 
 frame = pd.concat(li, axis=0, ignore_index=True)
-frame.dropna(subset=['상호명','상권업종대분류명','상권업종중분류명','상권업종소분류명','시군구명','법정동명','경도','위도'], inplace=True) # 지정한 열에 빈 행 제거
+frame.dropna(subset=['상호명','상권업종대분류명','상권업종중분류명',
+                     '상권업종소분류명','시군구명','법정동명','경도','위도'], inplace=True) # 지정한 열에 빈 행 제거
 frame.to_csv(output_file, index=False, encoding='cp949')

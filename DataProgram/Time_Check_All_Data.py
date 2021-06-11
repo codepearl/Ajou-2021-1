@@ -1,3 +1,11 @@
+########################################################################
+#                                                                      #
+#   @copyright  Copyright (c) 2021 Pear129, All rights reserved.       #
+#   @author     GuDY                                                   #
+#   @Ajou       융합시스템공학과 구동용  202020636                         #
+#                                                                      #
+########################################################################
+
 import pandas as pd
 from timeit import default_timer as timer
 from datetime import timedelta
