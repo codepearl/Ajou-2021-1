@@ -2,7 +2,7 @@
 Ajou University Python Team Project (2021-1)
 
 ## Getting Started
-Compile scenemanager.py to run the program.
+Compile scenemanager.py to run the program. <br/>
 If you want change range of search, please change pure_data in datamanager.py.
 
 * local - Dummy_File.csv
