@@ -2,7 +2,16 @@
 Ajou University Python Team Project (2021-1)
 
 ## Getting Started
-Compile scenemanager.py to run the program.
+Compile scenemanager.py to run the program. <br/>
+If you want change range of search, please change pure_data in datamanager.py.
+
+* local - Dummy_File.csv
+* nationwide -Merge_File_All_Col_Remove_r2.csv
+
+```
+pure_data = pd.read_csv('data/Merge_File_All_Col_Remove_r2.csv', encoding='cp949')
+#pure_data = pd.read_csv('data/Dummy_File.csv', encoding='cp949')
+```
 
 ## Prerequisites
 
