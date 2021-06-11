@@ -13,7 +13,7 @@ import glob
 
 #파일 경로와 저장 위치 및 파일명 변경 해야함.
 path = r'C:\Users\DY\Downloads\소상공인시장진흥공단_상가(상권)정보_20210331\test\Merge.py'   # use your path
-output_file= r'C:\Users\DY\Downloads\소상공인시장진흥공단_상가(상권)정보_20210331\test\Merge.py\Merge_File_All.csv' # 마지막 저장될 파일 이름
+output_file= r'C:\Users\DY\Downloads\소상공인시장진흥공단_상가(상권)정보_20210331\test\Merge.py\Merge_File_All_Col_Remove_r2.csv' # 마지막 저장될 파일 이름
 all_files = glob.glob(path + "/*.csv")
 
 li = []
